@@ -23,7 +23,7 @@ def index():
     form = forms.TypeIP()
     if form.validate_on_submit():
         ip = form.ip.data
-    return render_template('index.html', form=form, ip=ip), data=ping(ip))
+    return render_template('index.html', form=form, ip=ip, data=ping(ip))
 
 
 
