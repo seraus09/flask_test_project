@@ -1,19 +1,8 @@
-body {
-    background-color: #d5dbdb;
-    border: 2px solid;
-    width: 600px;
-    height: 10px solid
-    padding: 0px;
-    margin: 0px;
-    margin-left: 600px;
-    margin-top: 80px;
-}
-
-p {
+.p {
      align: center;
      text-align: left;
      color: red;
-     margin-left:45px;
-     padding:0px;
+     margin-left:0px;
+     padding:10px;
 
     }

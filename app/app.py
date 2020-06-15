@@ -14,7 +14,8 @@ def ping(ip):
     cmd = f"ping -c 4 {ip}"
     res = os.popen(cmd).read()
     data = res.splitlines()
-    return str('\n'.join(data))
+    results = (data[0],data[7],data[8])
+    return results
 
 @app.route('/' , methods=['GET', 'POST'])
 def index():
@@ -22,7 +23,7 @@ def index():
     form = forms.TypeIP()
     if form.validate_on_submit():
         ip = form.ip.data
-    return render_template('index.html', form=form, ip=ip, data=ping(ip))
+    return render_template('index.html', form=form, ip=ip), data=ping(ip))
 
 
 

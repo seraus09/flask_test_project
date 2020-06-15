@@ -1,12 +1,21 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% block title %}Flasky{% endblock %}
+{% block title %}Ping{% endblock %}
+{% block head %}
+{{ super() }}
+<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+{% endblock %}
 {% block page_content  %}
 <div class="page-header">
     <h1>Hello</h1>
 </div>
 {{ wtf.quick_form(form) }}
+{% endblock %}
 
-{{ data }}
+{% block data %}
 
+<div class="page-header">
+
+    {{ data }}
+</div>
 {% endblock %}
