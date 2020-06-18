@@ -38,5 +38,11 @@
     {% block page_content %}{% endblock %}
     {% block geo %}{% endblock %}
 
+    {% block scripts %}
+    {{ super() }}
+    {{ moment.include_moment() }}
+    {% endblock %}
+
 </div>
+
 {% endblock %}

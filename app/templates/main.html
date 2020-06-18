@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}Ping{% endblock %}
+{% block head %}
+{{ super() }}
+<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+{% endblock %}
+{% block page_content  %}
+<div class="page-header">
+  <h1>Hello</h1>
+  <p>The local date and time is {{ moment(current_time).format('LLL') }}.</p>
+  <p>Your IP is {{ real_ip }} </p>
+</div>
+{{ wtf.quick_form(form) }}
+{% endblock %}
+
+{% block geo %}
+
+<div class="page-header">
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">IP address</th>
+      <th scope="col">Country</th>
+      <th scope="col">Region</th>
+      <th scope="col">City</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ addr }}</td>
+      <td>{{ country }}</td>
+      <td>{{ region }}</td>
+      <td>{{ city }}</td>
+
+  </tbody>
+</table>
+
+
+
+</div>
+
+{% endblock %}
+
