@@ -1,8 +1,6 @@
-.p {
-     align: center;
-     text-align: left;
-     color: red;
-     margin-left:0px;
-     padding:10px;
-
-    }
+   .tables {
+    border: 4px double #333 ; /* Рамка вокруг таблицы */
+    border-collapse: separate; /* Способ отображения границы */
+    width: 100%; /* Ширина таблицы */
+    border-spacing: 7px 11px; /* Расстояние между ячейками */
+   }
