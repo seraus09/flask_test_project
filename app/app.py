@@ -3,15 +3,16 @@ from flask import render_template
 from flask_bootstrap import Bootstrap
 import requests, forms
 from datetime import datetime
-import os, json
+import os, json, ipaddress
 from flask_moment import Moment
 
 app = Flask(__name__)
 Bootstrap(app)
 moment = Moment(app)
 
-app.config['SECRET_KEY'] = 'hard to guess string'
+app.config['SECRET_KEY'] = '808994589d35d4b4670642b1a3903548'
 api_key = 'e811cf63b4083bb969ac6be16bea5d87'
+
 
 
 class CheckHost():
@@ -22,7 +23,7 @@ class CheckHost():
 
     def geoIP(self):
         ip = (self.host)
-        url = requests.get(f'http://api.ipstack.com/{ip}?access_key={api_key}') #get api request
+        url = requests.get(f'http://api.ipstack.com/{ip}?access_key={api_key}') #get api reques
         if url.status_code == 200:
             return url.json()
 
@@ -46,8 +47,8 @@ def index():
             data = ip.geoIP()
             check = data.get('type')
             addr = data.get("ip")
-            if check == None:
-                flash(f'No info found for host {addr}!')
+            if ipaddress.ip_address(addr).is_loopback or check == None:
+                flash(f'No info found for host {addr}, maybe localhost or private network?')
                 return render_template('index.html', form=form, current_time=datetime.utcnow(), real_ip=request.remote_addr)
             country = data.get("country_name")
             region = data.get("region_name")
@@ -56,13 +57,14 @@ def index():
             flag = data.get('location').get('country_flag_emoji')
             hostname = CheckHost(addr).get_hostname()
 
+
         else:
             return  render_template('index.html', form=form, current_time=datetime.utcnow(),real_ip=request.remote_addr)
 
         return render_template('main.html',flag=flag, current_time=datetime.utcnow(),real_ip=real_ip,
                                form=form,hostname=hostname,ip=ip, addr=addr, country=country, region=region, city=city)
     except Exception as error:
-        flash(f'Ooppss... Something went wrong !!!')
+        flash(f'Ooppss... Something went wrong !!! {error}')
         return render_template('index.html', form=form, current_time=datetime.utcnow(), real_ip=request.remote_addr)
 
 
