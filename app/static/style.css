@@ -1,6 +1,5 @@
-   .tables {
-    border: 4px double #333 ; /* Рамка вокруг таблицы */
-    border-collapse: separate; /* Способ отображения границы */
-    width: 100%; /* Ширина таблицы */
-    border-spacing: 7px 11px; /* Расстояние между ячейками */
-   }
+#basicMap {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+      }

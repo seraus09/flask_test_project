@@ -2,7 +2,9 @@
 {% block title %}Ping-Cheker{% endblock %}
 {% block head %}
 {{ super() }}
-    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+<link rel="stylesheet" href="static/style.css">
+<link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon">
+
 {% endblock %}
 {% block navbar %}
     <div class="navbar navbar-inverse" role="navigation" style="background-color: #5D326C;">
@@ -25,8 +27,8 @@
     </div>
 </div>
 {% endblock %}
-{% block content %}
 
+{% block content %}
 <div class="container">
     {% for message in get_flashed_messages() %}
         {% if "found" in message %}
@@ -40,15 +42,16 @@
         {% endif %}
 </div>
      {% endfor %}
+{% block page_content %}{% endblock %} {# this is block with page content#}
+<div>
+    {% block map %}
 
-    {% block page_content %}{% endblock %}
-    {% block geo %}{% endblock %}
-
-    {% block scripts %}
+    {% endblock %}
+</div>
+{% block geo %}{% endblock %}
+{% block scripts %}
     {{ super() }}
      {{ moment.include_moment() }}
-    {% endblock %}
-
+{% endblock %}
 </div>
-
 {% endblock %}

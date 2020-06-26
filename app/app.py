@@ -59,12 +59,15 @@ def index():
 
 
         else:
-            return  render_template('index.html', form=form, current_time=datetime.utcnow(),real_ip=request.remote_addr)
+            return  render_template('index.html', form=form, current_time=datetime.utcnow(), real_ip=request.remote_addr)
 
-        return render_template('main.html',flag=flag, current_time=datetime.utcnow(),real_ip=real_ip,
-                               form=form,hostname=hostname,ip=ip, addr=addr, country=country, region=region, city=city)
+
+        return render_template('main.html', flag=flag, data=data, current_time=datetime.utcnow(),real_ip=real_ip,
+                               form=form,hostname=hostname,ip=ip, addr=addr,
+                               country=country, region=region, city=city)
+
     except Exception as error:
-        flash(f'Ooppss... Something went wrong !!! {error}')
+        flash(f'Ooops... Something went wrong !!! {error}')
         return render_template('index.html', form=form, current_time=datetime.utcnow(), real_ip=request.remote_addr)
 
 
