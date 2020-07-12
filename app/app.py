@@ -16,19 +16,20 @@ api_key = 'e811cf63b4083bb969ac6be16bea5d87'
 
 
 class CheckHost():
-#Class for main page
+    """Class for main page"""
     def __init__(self, host):
         self.host = host
 
 
     def geoIP(self):
+        """Get results for api """
         ip = (self.host)
-        url = requests.get(f'http://api.ipstack.com/{ip}?access_key={api_key}') #get api reques
+        url = requests.get(f'http://api.ipstack.com/{ip}?access_key={api_key}') #get api request
         if url.status_code == 200:
             return url.json()
 
     def get_hostname(self):
-        #function that find out hostname
+        """The method  for find out hostname"""
         get_ip = (self.host)
         cmd = (f"nslookup {get_ip} | head -n 1 | cut -d'=' -f2") #getting hostname
         hostname = os.popen(cmd).read()
@@ -39,6 +40,7 @@ class CheckHost():
 
 @app.route('/' , methods=['GET', 'POST'])
 def index():
+    """Index page"""
     try:
         ip = None
         form = forms.TypeIP()
@@ -55,6 +57,8 @@ def index():
             city = data.get("city")
             real_ip = request.remote_addr
             flag = data.get('location').get('country_flag_emoji')
+            latitude = data.get('latitude')
+            longitude = data.get('longitude')
             hostname = CheckHost(addr).get_hostname()
 
 
@@ -62,9 +66,9 @@ def index():
             return  render_template('index.html', form=form, current_time=datetime.utcnow(), real_ip=request.remote_addr)
 
 
-        return render_template('main.html', flag=flag, data=data, current_time=datetime.utcnow(),real_ip=real_ip,
-                               form=form,hostname=hostname,ip=ip, addr=addr,
-                               country=country, region=region, city=city)
+        return render_template('test.html', flag=flag, data=data, current_time=datetime.utcnow(), real_ip=real_ip,
+                               form=form, hostname=hostname, ip=ip, addr=addr,country=country, region=region,
+                               city=city, latitude=latitude, longitude=longitude)
 
     except Exception as error:
         flash(f'Ooops... Something went wrong !!! {error}')

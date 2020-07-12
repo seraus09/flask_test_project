@@ -2,10 +2,14 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% block title %}Ping-Checker{% endblock %}
 {% block head %}
-{{ super() }}
-<link rel="stylesheet" href="static/style.css">
-<link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon">
+   {% block styles %}
+   {{ super() }}
+   <link rel="stylesheet"  href="{{url_for('static', filename='style.css')}}">
+   <link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon">
+   {% endblock styles %}
 {% endblock %}
+<body>
+{% block body %}
 {% block page_content  %}
 
 <div class="page-header">
@@ -17,13 +21,14 @@
 {% endblock %}
 
 {% block map %}
+{% block scripts %}
 <div class="page-header">
-<script src="static/OpenLayers.js"></script>
+<script src="{{url_for('static', filename='OpenLayers.js')}}"></script>
   <div id="basicMap">
-    <script src="static/map.js"></script>
+    <script src="{{url_for('static', filename='map.js')}}"></script>
   </div>
-
 </div>
+{% endblock scripts %}
 {% endblock %}
 
 {% block geo %}
@@ -54,5 +59,7 @@
 </table>
 </div>
 {{ data }}
+{% endblock body %}
+</body>
 {% endblock %}
 
