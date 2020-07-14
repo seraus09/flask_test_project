@@ -3,11 +3,11 @@
 {% block head %}
     {% block styles %}
     {{ super() }}
-    <link rel="stylesheet" href="static/style.css">
+    
     <link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon">
     {% endblock styles %}
 {% endblock %}
-    <body {% block body_attribs %} onload="init();" {% endblock body_attribs %}>
+    <body {% block body_attribs %}  {% endblock body_attribs %}>
 
     {% block body %} <!-- open block body -->
 

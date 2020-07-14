@@ -20,16 +20,16 @@
 {{ wtf.quick_form(form) }}
 {% endblock %}
 
-{% block map %}
+
 {% block scripts %}
 <div class="page-header">
 <script src="{{url_for('static', filename='OpenLayers.js')}}"></script>
   <div id="basicMap">
     <script src="{{url_for('static', filename='map.js')}}"></script>
   </div>
-</div>
+
 {% endblock scripts %}
-{% endblock %}
+
 
 {% block geo %}
 <div class="page-header">
@@ -59,7 +59,7 @@
 </table>
 </div>
 {{ data }}
-{% endblock body %}
+{% endblock %}
 </body>
 {% endblock %}
 
