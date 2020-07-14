@@ -11,10 +11,11 @@
           <style type="text/css">
               html, body, #basicMap {
                   width: 100%;
-                  height: 100%;
+                  height: 80%;
                   margin: 0;
               }
           </style>
+
        {%- endblock styles %}
 
        {% block scripts %}
@@ -25,8 +26,8 @@
                  var mapnik         = new OpenLayers.Layer.OSM();
                  var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
                  var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
-                 var position       = new OpenLayers.LonLat(13.41,52.52).transform( fromProjection, toProjection);
-                 var zoom           = 15;
+                 var position       = new OpenLayers.LonLat({{ longitude }},{{ latitude }}).transform( fromProjection, toProjection);
+                 var zoom           = 8;
 
                  map.addLayer(mapnik);
                  map.setCenter(position, zoom );
@@ -38,9 +39,52 @@
      </head>
      <body{% block body_attribs %} onload="init();"{% endblock body_attribs %}>
           {% block body %}
-           {{ super() }}
-           <div id="basicMap"></div>
+          {{ super() }}
           {% endblock body %}
+          {% block page_content  %}
+
+            <div class="page-header">
+              <h1>Hello</h1>
+              <p>The local date and time is {{ moment(current_time).format('LLL') }}.</p>
+              <p>Your IP is {{ real_ip }} </p>
+            </div>
+            {{ wtf.quick_form(form) }}
+          {% endblock %}
+
+
+          {% block geo %}
+                 <div class="page-header">
+                <div  id="basicMap" style="width: 480px; height: 280px;"></div>
+                 </div>
+                <div class="page-header">
+                  <table class="table" style="border 0;">
+                  <tbody>
+                    <tr >
+                      <th scope="col" style="border-top: 0">IP address</th>
+                       <td style="border-top: 0" >{{ addr }}</td>
+                    </tr>
+                    <tr>
+                      <th scope="col" style="border-top: 0"> Host name</th>
+                      <td style="border-top: 0">{{ hostname }}</td>
+                    </tr>
+                    <tr>
+                      <th scope="col" style="border-top: 0">Country</th>
+                      <td style="border-top: 0">{{ country }} {{ flag }}</td>
+                    </tr>
+                    <tr>
+                      <th scope="col" style="border-top: 0">Region</th>
+                      <td style="border-top: 0">{{ region }}</td>
+                    </tr>
+                    <tr>
+                      <th scope="col" style="border-top: 0">City</th>
+                      <td style="border-top: 0">{{ city }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                </div>
+                {% endblock %}
+
+
      </body>
 
 </html>
