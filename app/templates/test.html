@@ -27,9 +27,11 @@
                  var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
                  var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
                  var position       = new OpenLayers.LonLat({{ longitude }},{{ latitude }}).transform( fromProjection, toProjection);
-                 var zoom           = 6;
-
+                 var zoom           = 8;
+                 var markers = new OpenLayers.Layer.Markers( "static/marker.png" );
                  map.addLayer(mapnik);
+                 map.addLayer(markers);
+                 markers.addMarker(new OpenLayers.Marker(position));
                  map.setCenter(position, zoom );
                }
            </script>
@@ -54,7 +56,7 @@
 
           {% block geo %}
 
-                 <div class="page-header"  style="border-bottom: 0; box-shadow: -14px 9px 28px -1px rgba(0,0,0,0.43); width: 500px; height: 300px;">
+                 <div class="page-header"  style="border-bottom: 0; box-shadow: -14px 9px 28px -1px rgba(0,0,0,0.20); width: 500px; height: 300px;">
                 <div  id="basicMap" style="width: 500px; height: 300px;"></div>
                  </div>
                 <div class="page-header">
