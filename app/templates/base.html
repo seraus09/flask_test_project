@@ -3,9 +3,9 @@
 {% block head %}
     {% block styles %}
     {{ super() }}
-    
-    <link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon">
+       <link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon">
     {% endblock styles %}
+
 {% endblock %}
     <body {% block body_attribs %}  {% endblock body_attribs %}>
 
@@ -51,8 +51,8 @@
                    {{ super() }}
                    {{ moment.include_moment() }}
                 {% endblock %}
-                {% block page_content %} {% endblock %} {# this is block with page content#}
-                {% block geo %}{% endblock %} <!--  The block with information about ip or hostname  -->
+             {% block page_content %}  {% endblock %} {# this is block with page content#}
+              {% block geo %}{% endblock %} <!--  The block with information about ip or hostname  -->
         </div>
         {% endblock %} <!-- close block content -->
         {% endblock %} <!-- open block body -->
