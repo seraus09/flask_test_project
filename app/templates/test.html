@@ -1,90 +1,63 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-     <head>
-       {%- block head %}
-       <title>{% block title %}Ping-Checker{% endblock %}</title>
-         {{ moment.include_jquery() }}
-         {{ moment.include_moment() }}
-       {%- block styles %}
-         {{ super() }}
-         <link rel="stylesheet"  href="{{url_for('static', filename='style.css')}}">
-       {%- endblock styles %}
+{% block title %}Ping-Checker{% endblock %}
+{% block head %}
+{{ super() }}
+{#<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">#}
 
-       {% block scripts %}
-           <script src="{{url_for('static', filename='OpenLayers.js')}}"></script>
-           <script>
-               function init() {
-                 map = new OpenLayers.Map("basicMap");
-                 var mapnik         = new OpenLayers.Layer.OSM();
-                 var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
-                 var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
-                 var position       = new OpenLayers.LonLat({{ longitude }},{{ latitude }}).transform( fromProjection, toProjection);
-                 var zoom           = 8;
-                 var markers = new OpenLayers.Layer.Markers( "static/marker.png" );
-                 map.addLayer(mapnik);
-                 map.addLayer(markers);
-                 markers.addMarker(new OpenLayers.Marker(position));
-                 map.setCenter(position, zoom );
-               }
-           </script>
-       {%- endblock scripts %}
+{% endblock %}
+{% block page_content  %}
+<div class="page-header">
+    <h1>Hello</h1>
+    <p>The local date and time is {{ moment(current_time).format('LLL') }}.</p>
+    <p>Your IP is {{ real_ip }} </p>
+</div>
 
-       {%- endblock head %}
-     </head>
-     <body{% block body_attribs %} onload="init();"{% endblock body_attribs %}>
-          {% block body %}
-          {{ super() }}
-          {% endblock body %}
-          {% block page_content  %}
-            {{ super() }}
-            <div class="page-header">
-              <h1>Hello</h1>
+{{ wtf.quick_form(form) }}
+{% endblock %}
 
-              <p>The local date and time is {{ moment(current_time).format('LLL') }}.</p>
-
-              <p>Your IP is {{ real_ip }} </p>
-            </div>
-            {{ wtf.quick_form(form) }}
-          {% endblock %}
-
-
-          {% block geo %}
-
-                 <div class="page-header"  style="border-bottom: 0; box-shadow: -14px 9px 28px -1px rgba(0,0,0,0.20); width: 500px; height: 300px;">
-                <div  id="basicMap" style="width: 500px; height: 300px;"></div>
-                 </div>
-                <div class="page-header">
-                  <table class="table" style="border 0; ">
+{% block geo %}
+<div class="page-header">
+    <table class="table">
                   <tbody>
                     <tr >
-                      <th scope="col" style="border-top: 0">IP address</th>
-                       <td style="border-top: 0" >{{ addr }}</td>
+                      <th scope="col" >91.201.25.57</th>
+                       <td>
+                           {% if  local  < 4 %}
+                               <div style="color:red;"> {{ local }}/4 Packet loss</div>
+                           {% else %}
+                               <div style="color:green;">{{ local }}/4 ОК</div>
+                           {% endif %}
+                       </td>
                     </tr>
                     <tr>
-                      <th scope="col" style="border-top: 0"> Host name</th>
-                      <td style="border-top: 0">{{ hostname }}</td>
+                      <th scope="col" >185.250.206.220</th>
+                      <td >
+                          {% if  virt  < 4 %}
+                               <div style="color:red;"> {{ virt }} /4 Packet loss</div>
+                           {% else %}
+                               <div style="color:green;">{{ virt }}/4 ОК</div>
+                           {% endif %}
+                      </td>
                     </tr>
                     <tr>
-                      <th scope="col" style="border-top: 0">Country</th>
-                      <td style="border-top: 0">{{ country }} {{ flag }}</td>
+                      <th scope="col">35.178.203.123</th>
+                      <td>{% if  amazon  < 4 %}
+                               <div style="color:red;"> {{ amazon }} /4 Packet loss</div>
+                           {% else %}
+                               <div style="color:green;">{{ amazon }}/4 ОК</div>
+                           {% endif %}</td>
                     </tr>
                     <tr>
-                      <th scope="col" style="border-top: 0">Region</th>
-                      <td style="border-top: 0">{{ region }}</td>
+                      <th scope="col" >Region</th>
+                      <td>{{ region }}</td>
                     </tr>
                     <tr>
-                      <th scope="col" style="border-top: 0">City</th>
-                      <td style="border-top: 0">{{ city }}</td>
+                      <th scope="col">City</th>
+                      <td>{{ city }}</td>
                     </tr>
                   </tbody>
                 </table>
                 </div>
-
-                {% endblock %}
-
-
-     </body>
-
-</html>
+</div>
+{% endblock %}
