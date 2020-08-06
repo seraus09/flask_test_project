@@ -5,6 +5,9 @@ import requests, forms
 from datetime import datetime
 import os, json, ipaddress
 from flask_moment import Moment
+from flask import jsonify
+from fabric import Connection
+import concurrent.futures
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -38,41 +41,62 @@ class CheckHost():
         else:
             return hostname
 
+    def get_ping(self):
+        """'The method for check ping"""
+        get_host = (self.host)
+        thread = concurrent.futures.ThreadPoolExecutor()
+        # command = os.popen(f"ping -c4 {get_host } | tail  -2 | head -1 ").read().split(" ").pop(3)
+        server_list = ['91.201.25.57', '185.250.206.220','35.178.203.123']
+        awk = "awk '{print $1}'"
+        cmd = f'''ping -c 4 {get_host} | tail  -2 | head -1 | cut -d "," -f 2 | {awk} '''
+        fun = lambda x: Connection(f'root@{x}').run(cmd, hide=True).stdout
+        g = []
+        for i in thread.map(fun, server_list):
+            g.append(str(i).rstrip('\n'))
+        return g
+
+
 @app.route('/' , methods=['GET', 'POST'])
 def index():
     """Index page"""
     try:
         ip = None
         form = forms.TypeIP()
-        if form.validate_on_submit() and request.method == 'POST':
+        check_button = form.submit.data
+        ping_button = form.ping.data
+        if form.validate_on_submit() == check_button and request.method == 'POST':
             ip = CheckHost(form.ip.data)
             data = ip.geoIP()
             check = data.get('type')
             addr = data.get("ip")
-            if ipaddress.ip_address(addr).is_loopback or check == None:
+            if check == None:
                 flash(f'No info found for host {addr}, maybe localhost or private network?')
-                return render_template('index.html', form=form, current_time=datetime.utcnow(), real_ip=request.remote_addr)
-            country = data.get("country_name")
-            region = data.get("region_name")
-            city = data.get("city")
-            real_ip = request.remote_addr
-            flag = data.get('location').get('country_flag_emoji')
-            latitude = data.get('latitude')
-            longitude = data.get('longitude')
-            hostname = CheckHost(addr).get_hostname()
+                return render_template('index.html', form=form,
+                                       current_time=datetime.utcnow(), real_ip=request.remote_addr)
+
+        elif form.validate_on_submit() == ping_button and request.method == 'POST':
+            ip = CheckHost(form.ip.data)
+            data = CheckHost.get_ping(ip)
+            return render_template('test.html', form=form,
+                                   current_time=datetime.utcnow(), local=int(data[0]), virt=int(data[1]),amazon=int(data[2]),
+                                   real_ip=request.remote_addr)
 
 
         else:
-            return  render_template('index.html', form=form, current_time=datetime.utcnow(), real_ip=request.remote_addr)
+            return  render_template('index.html', form=form,
+                                    current_time=datetime.utcnow(), real_ip=request.remote_addr)
 
-
-        return render_template('test.html', flag=flag, data=data, current_time=datetime.utcnow(), real_ip=real_ip,
-                               form=form, hostname=hostname, ip=ip, addr=addr,country=country, region=region,
-                               city=city, latitude=latitude, longitude=longitude)
-
+        return render_template('main.html', flag = data.get('location').get('country_flag_emoji'),
+                               data = data, current_time = datetime.utcnow(), real_ip = request.remote_addr,
+                               form = form, hostname = CheckHost(addr).get_hostname(), ip = ip, addr = addr,
+                               country = data.get("country_name"),region = data.get("region_name"),
+                               city = data.get("city"), latitude = data.get('latitude'), longitude = data.get('longitude'))
     except Exception as error:
         flash(f'Ooops... Something went wrong !!! {error}')
         return render_template('index.html', form=form, current_time=datetime.utcnow(), real_ip=request.remote_addr)
+
+
+
 
 
 if __name__ ==  '__main__':
