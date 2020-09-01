@@ -18,7 +18,7 @@ api_key = 'e811cf63b4083bb969ac6be16bea5d87'
 
 
 class CheckHost():
-    """Class for main page"""
+    """Class for getting different result"""
     def __init__(self, host):
         self.host = host
 
@@ -48,7 +48,7 @@ class CheckHost():
             return url.json()
 
 class MainPage():
-
+     """Show information on page"""
      def get_information_from_form():
         """Getting information from the form"""
         form = forms.TypeIP()
@@ -82,6 +82,7 @@ class MainPage():
                                country=ip_information.get("country_name"), region=ip_information.get("region_name"),
                                city=ip_information.get("city"), latitude=ip_information.get('latitude'),
                                longitude=ip_information.get('longitude'))
+
 
 
 @app.route('/', methods=['GET', 'POST'])
