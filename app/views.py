@@ -6,6 +6,10 @@ from datetime import datetime
 import os, json, ipaddress
 from flask_moment import Moment
 import concurrent.futures
+import socket
+from urllib.parse import urlparse
+import re
+
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -22,39 +26,48 @@ class CheckHost():
     def __init__(self, host):
         self.host = host
 
+    def get_clean_hostname(self):
+        url = self.host
+        if re.match('http:|https:|ftp:', str(url)):
+            hostname = socket.getaddrinfo(urlparse(url).hostname, 443, proto=socket.IPPROTO_TCP)
+            ip_candidates = re.findall(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b", str(hostname))
+            clean_string = str(ip_candidates)[0:17].rstrip(']').rstrip("'").lstrip("[").lstrip("'").rstrip(",").rstrip("'")
+            return clean_string
+        else:
+            return url
 
     def get_result_from_api_ipstack(self):
-        """Get results from  api """
-        ip = (self.host)
+        ip = CheckHost.get_clean_hostname(self)
         url = requests.get(f'http://api.ipstack.com/{ip}?access_key={api_key}') #get api request
         if url.status_code == 200:
             return url.json()
 
     def get_hostname(self):
-        """The method for find out hostname"""
-        get_ip = (self.host)
-        cmd = (f"nslookup {get_ip} | head -n 1 | cut -d'=' -f2") #getting hostname
-        hostname = os.popen(cmd).read()
-        if "can't" in hostname:
+        try:
+            get_ip = (self.host)
+            hostname = socket.gethostbyaddr(get_ip)
+            return hostname[0]
+        except:
             return get_ip
-        else:
-            return hostname
+
 
     def get_ping(self):
-        """'Getting result from own servers"""
-        get_host = (self.host)
+        get_host = CheckHost.get_clean_hostname(self)
         url = requests.get(f'http://91.201.25.57/api/v1.0/tasks/{get_host}', auth=('sera', '12345'))
         if url.status_code == 200:
             return url.json()
 
 class MainPage():
      """Show information on page"""
+
+
+
      def get_information_from_form():
-        """Getting information from the form"""
-        form = forms.TypeIP()
-        ip = CheckHost(form.field_data.data)
-        ip_information = ip.get_result_from_api_ipstack()
-        return ip_information
+         form = forms.TypeIP()
+         host = form.field_data.data
+         ip = CheckHost(host)
+         ip_information = ip.get_result_from_api_ipstack()
+         return ip_information
 
      def return_ping_page():
          """Return information from the 'ping' button"""
@@ -67,7 +80,6 @@ class MainPage():
 
 
      def return_index_page_if_error():
-        """If error redirect to index page"""
         return render_template('index.html', form=forms.TypeIP(),
                                current_time=datetime.utcnow(), real_ip=request.remote_addr)
 
@@ -84,16 +96,14 @@ class MainPage():
                                longitude=ip_information.get('longitude'))
 
 
-
 @app.route('/', methods=['GET', 'POST'])
 def return_index_page():
-    """Index page"""
     try:
-        ip = None
+
         form = forms.TypeIP()
         if form.validate_on_submit() == form.submit.data and request.method == 'POST':
             if MainPage.get_information_from_form().get('type') is None:
-                flash(f'No info found for host {MainPage.get_information_from_form().get("ip")}, maybe localhost or private network?')
+                flash(f"No info found for host {MainPage.get_information_from_form().get('ip')}, maybe localhost or private network?")
                 return MainPage.return_index_page_if_error()
             else:
                 return MainPage.return_check_page()
@@ -107,9 +117,6 @@ def return_index_page():
     except Exception as error:
         flash(f'Ooops... Something went wrong !!! {error}')
         return MainPage.return_index_page_if_error()
-
-
-
 
 
 
