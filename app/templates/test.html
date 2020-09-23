@@ -2,9 +2,10 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% block title %}Ping-Checker{% endblock %}
 {% block head %}
+{% block styles %}
 {{ super() }}
-{#<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">#}
-
+<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+{% endblock styles %}
 {% endblock %}
 {% block page_content  %}
 <div class="page-header">
@@ -21,8 +22,8 @@
     <table class="table">
                   <tbody>
                     <tr >
-                      <th scope="col" >91.201.25.57</th>
-                       <td>
+                      <th scope="col" style="border-top: 0" >91.201.25.57</th>
+                       <td style="border-top: 0">
                            {% if  local  < 4 %}
                                <div style="color:red;"> {{ local }}/4 Packet loss</div>
                            {% else %}
@@ -31,8 +32,8 @@
                        </td>
                     </tr>
                     <tr>
-                      <th scope="col" >185.250.206.220</th>
-                      <td >
+                      <th scope="col" style="border-top: 0" >185.250.206.220</th>
+                      <td style="border-top: 0">
                           {% if  virt  < 4 %}
                                <div style="color:red;"> {{ virt }} /4 Packet loss</div>
                            {% else %}
@@ -41,23 +42,24 @@
                       </td>
                     </tr>
                     <tr>
-                      <th scope="col">35.178.203.123</th>
-                      <td>{% if  amazon  < 4 %}
-                               <div style="color:red;"> {{ amazon }} /4 Packet loss</div>
+                      <th style="border-top: 0" scope="col">35.178.203.123</th>
+                      <td style="border-top: 0">{% if  local  < 4 %}
+                               <div style="color:red;"> {{ local }} /4 Packet loss</div>
                            {% else %}
-                               <div style="color:green;">{{ amazon }}/4 ОК</div>
+                               <div style="color:green;">{{ local }}/4 ОК</div>
                            {% endif %}</td>
                     </tr>
                     <tr>
-                      <th scope="col" >Region</th>
-                      <td>{{ region }}</td>
+                      <th scope="col" style="border-top: 0" >Region</th>
+                      <td style="border-top: 0">{{ region }}</td>
                     </tr>
                     <tr>
-                      <th scope="col">City</th>
-                      <td>{{ city }}</td>
+                      <th scope="col" style="border-top: 0">City</th>
+                      <td style="border-top: 0">{{ city }}</td>
                     </tr>
                   </tbody>
                 </table>
                 </div>
 </div>
+{{ data }}
 {% endblock %}

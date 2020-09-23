@@ -1,0 +1,7 @@
+Flask==0.10.1 
+Werkzeug==0.16.1
+Moment
+Flask-Bootstrap
+requests
+Flask-WTF
+flask-moment

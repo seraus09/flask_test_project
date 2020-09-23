@@ -2,8 +2,11 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% block title %}Ping-Checker{% endblock %}
 {% block head %}
+{% block styles %}
 {{ super() }}
-{#<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">#}
+<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+{% endblock styles %}
+
 
 {% endblock %}
 {% block page_content  %}
@@ -16,8 +19,29 @@
 {% endblock %}
 
 {% block geo %}
-<div class="page-header">
-{{ data }}
-</div>
-{% endblock %}
 
+<div class="page-header">
+ <h3><img src="static/img/about1.png">About</h3>
+ <h5>Ping-Checker is a modern online tool for website monitoring and checking availability of hosts, IP addresses.
+ It supports the latest technologies such as localized domain names (both punycode and original formats), hostname IPv6 records (also known as AAAA record).
+</h5>
+
+<h3 align="center"><img src="static/img/features.png">Features Overview</h3>
+ <section>
+
+   <article>
+     <h3 class="features"><img src="static/img/check.png">Info</h3>
+
+     <p>Tacos actually microdosing, pour-over semiotics banjo chicharrones retro fanny pack portland everyday carry vinyl typewriter. Tacos PBR&B pork belly, everyday carry ennui pickled sriracha normcore hashtag polaroid single-origin coffee cold-pressed. PBR&B tattooed trust fund twee, leggings salvia iPhone photo booth health goth gastropub hammock.</p>
+   </article>
+
+   <article>
+     <h3 class="features"> <img src="static/img/ping.png">Ping</h3>
+
+     <p>Tacos actually microdosing, pour-over semiotics banjo chicharrones retro fanny pack portland everyday carry vinyl typewriter. Tacos PBR&B pork belly, everyday carry ennui pickled sriracha normcore hashtag polaroid single-origin coffee cold-pressed. PBR&B tattooed trust fund twee, leggings salvia iPhone photo booth health goth gastropub hammock.</p>
+   </article>
+
+ </section>
+</div>
+
+{% endblock %}

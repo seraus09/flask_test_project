@@ -1,9 +1,8 @@
-from flask import Flask, redirect, url_for, flash, request
+from flask import Flask, flash, request
 from flask import render_template
 from flask_bootstrap import Bootstrap
 import requests, forms
 from datetime import datetime
-import os, json, ipaddress
 from flask_moment import Moment
 import concurrent.futures
 import socket
@@ -31,10 +30,10 @@ class CheckHost():
         if re.match('http:|https:|ftp:', str(url)):
             hostname = socket.getaddrinfo(urlparse(url).hostname, 443, proto=socket.IPPROTO_TCP)
             ip_candidates = re.findall(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b", str(hostname))
-            clean_string = str(ip_candidates)[0:17].rstrip(']').rstrip("'").lstrip("[").lstrip("'").rstrip(",").rstrip("'")
-            return clean_string
+            clean_string = str(ip_candidates)[0:17].rstrip(']').rstrip("'").lstrip("[").lstrip("'").lstrip("b").rstrip(",").rstrip("'")
+            return str(clean_string.encode('idna')).lstrip('b').lstrip("'").rstrip("'")
         else:
-            return url
+            return str(url.encode('idna')).lstrip('b').rstrip("'").lstrip("'")
 
     def get_result_from_api_ipstack(self):
         ip = CheckHost.get_clean_hostname(self)
@@ -52,15 +51,22 @@ class CheckHost():
 
 
     def get_ping(self):
+        thread = concurrent.futures.ThreadPoolExecutor()
         get_host = CheckHost.get_clean_hostname(self)
-        url = requests.get(f'http://91.201.25.57/api/v1.0/tasks/{get_host}', auth=('sera', '12345'))
-        if url.status_code == 200:
-            return url.json()
+        nodes = ['91.201.25.57','185.250.206.220']
+        result = []
+        try:
+            url = lambda node: requests.get(f'http://{node}/api/v1.0/tasks/{get_host}', auth=('sera', '12345'))
+            for packet in thread.map(url,nodes):
+                if packet.status_code == 200:
+                    result.append(packet.json().get('packet'))
+            return result
+        finally:
+            result.append(0)
+            return result
 
 class MainPage():
      """Show information on page"""
-
-
 
      def get_information_from_form():
          form = forms.TypeIP()
@@ -74,9 +80,8 @@ class MainPage():
          form = forms.TypeIP()
          ip = CheckHost(form.field_data.data)
          data = CheckHost.get_ping(ip)
-         packet = data.get('packet')
          return render_template('test.html', form=form,current_time=datetime.utcnow(),
-                                local=int(packet), virt=int(packet),real_ip=request.remote_addr)
+                                local=int(data[0]), virt=int(data[1]),real_ip=request.remote_addr)
 
 
      def return_index_page_if_error():
