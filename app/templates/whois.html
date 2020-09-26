@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}Ping-Checker{% endblock %}
+{% block head %}
+{% block styles %}
+{{ super() }}
+<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+{% endblock styles %}
+{% endblock %}
+{% block page_content  %}
+<div class="page-header">
+    <h1>Hello</h1>
+    <p>The local date and time is {{ moment(current_time).format('LLL') }}.</p>
+    <p>Your IP is {{ real_ip }} </p>
+</div>
+
+{{ wtf.quick_form(form) }}
+{% endblock %}
+
+{% block geo %}
+{{ data }}
+{% endblock %}
