@@ -8,6 +8,7 @@ import concurrent.futures
 import socket
 from urllib.parse import urlparse
 import re
+import whois
 
 
 app = Flask(__name__)
@@ -65,6 +66,14 @@ class CheckHost():
             result.append(0)
             return result
 
+    def get_whois_result(self):
+        try:
+            ip = CheckHost.get_clean_hostname(self)
+            result = whois.whois(ip)
+            return result
+        except Exception as err:
+            return err
+
 class MainPage():
      """Show information on page"""
 
@@ -99,6 +108,11 @@ class MainPage():
                                country=ip_information.get("country_name"), region=ip_information.get("region_name"),
                                city=ip_information.get("city"), latitude=ip_information.get('latitude'),
                                longitude=ip_information.get('longitude'))
+     def return_whois_page():
+         form = forms.TypeIP()
+         ip = CheckHost(form.field_data.data)
+         ip_information = CheckHost.get_whois_result(ip)
+         return render_template('whois.html', form=form, current_time=datetime.utcnow(), real_ip=request.remote_addr, data=ip_information)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -115,6 +129,9 @@ def return_index_page():
 
         elif form.validate_on_submit() == form.ping.data and request.method == 'POST':
             return MainPage.return_ping_page()
+
+        elif form.validate_on_submit() == form.whois.data and request.method == 'POST':
+            return MainPage.return_whois_page()
 
         else:
             return  MainPage.return_index_page_if_error()
