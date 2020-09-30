@@ -16,7 +16,40 @@
 
 {{ wtf.quick_form(form) }}
 {% endblock %}
-
-{% block geo %}
 {{ data }}
+{% block geo %}
+<div class="page-header">
+<table class="table table-borderless">
+  <tbody>
+    <tr>
+      <th scope="row" style="border-top: 0">Name</th>
+      <td style="border-top: 0">{{ name }}</td>
+    </tr>
+    <tr>
+      <th scope="row" style="border-top: 0">Registrar</th>
+      <td style="border-top: 0">{{ reg }}</td>
+    </tr>
+    <tr>
+      <th scope="row" style="border-top: 0">Creation_date</th>
+      <td style="border-top: 0">{{ create }}</td>
+    </tr>
+       <tr>
+      <th scope="row" style="border-top: 0">Expiration_date</th>
+      <td style="border-top: 0">{{ expiration }}</td>
+    </tr>
+    <tr>
+      <th scope="row" style="border-top: 0">Last update</th>
+      <td style="border-top: 0"> {{ updated }}</td>
+    </tr>
+    <tr>
+      <th scope="row" style="border-top: 0">Status</th>
+      <td style="border-top: 0">{{ status }}</td>
+    </tr>
+      <tr>
+      <th scope="row" style="border-top: 0">Name servers</th>
+      <td style="border-top: 0">{{ ns }}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 {% endblock %}

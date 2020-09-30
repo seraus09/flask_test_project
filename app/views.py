@@ -8,7 +8,9 @@ import concurrent.futures
 import socket
 from urllib.parse import urlparse
 import re
+from ipwhois import IPWhois
 import whois
+
 
 
 app = Flask(__name__)
@@ -66,13 +68,6 @@ class CheckHost():
             result.append(0)
             return result
 
-    def get_whois_result(self):
-        try:
-            ip = CheckHost.get_clean_hostname(self)
-            result = whois.whois(ip)
-            return result
-        except Exception as err:
-            return err
 
 class MainPage():
      """Show information on page"""
@@ -89,7 +84,7 @@ class MainPage():
          form = forms.TypeIP()
          ip = CheckHost(form.field_data.data)
          data = CheckHost.get_ping(ip)
-         return render_template('test.html', form=form,current_time=datetime.utcnow(),
+         return render_template('ping.html', form=form,current_time=datetime.utcnow(),
                                 local=int(data[0]), virt=int(data[1]),real_ip=request.remote_addr)
 
 
@@ -108,11 +103,75 @@ class MainPage():
                                country=ip_information.get("country_name"), region=ip_information.get("region_name"),
                                city=ip_information.get("city"), latitude=ip_information.get('latitude'),
                                longitude=ip_information.get('longitude'))
+
+
      def return_whois_page():
          form = forms.TypeIP()
-         ip = CheckHost(form.field_data.data)
-         ip_information = CheckHost.get_whois_result(ip)
-         return render_template('whois.html', form=form, current_time=datetime.utcnow(), real_ip=request.remote_addr, data=ip_information)
+         host = form.field_data.data
+         domain = urlparse(host).hostname
+         try:
+             if re.match('http:|https:', host):
+                 if re.match(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b", str(domain)):
+                     return render_template('ipwhois.html', form=forms.TypeIP(),
+                                            current_time=datetime.utcnow(), real_ip=request.remote_addr,
+                                            data=IPWhois(domain).lookup_whois(),
+                                            address=IPWhois(domain).lookup_whois().get('nets')[0].get('address'),
+                                            cidr=IPWhois(domain).lookup_whois().get('nets')[0].get('cidr'),
+                                            city=IPWhois(domain).lookup_whois().get('nets')[0].get('city'),
+                                            country=IPWhois(domain).lookup_whois().get('nets')[0].get('country'),
+                                            created=IPWhois(domain).lookup_whois().get('nets')[0].get('created'),
+                                            description=IPWhois(domain).lookup_whois().get('nets')[0].get('description'),
+                                            emails=IPWhois(domain).lookup_whois().get('nets')[0].get('emails'),
+                                            handle=IPWhois(domain).lookup_whois().get('nets')[0].get('handle'),
+                                            name=IPWhois(domain).lookup_whois().get('nets')[0].get('name'),
+                                            postal_code=IPWhois(domain).lookup_whois().get('nets')[0].get('postal_code'),
+                                            range=IPWhois(domain).lookup_whois().get('nets')[0].get('range'),
+                                            state=IPWhois(domain).lookup_whois().get('nets')[0].get('state'),
+                                            updated=IPWhois(domain).lookup_whois().get('nets')[0].get('updated'), )
+                 else:
+                     return render_template('whois.html', form=forms.TypeIP(),
+                                            current_time=datetime.utcnow(), real_ip=request.remote_addr,
+                                            data=whois.query(domain).__dict__,
+                                            name=whois.query(domain).__dict__.get('name'),
+                                            reg=whois.query(domain).__dict__.get('registrar'),
+                                            create=whois.query(domain).__dict__.get('creation_date'),
+                                            expiration=whois.query(domain).__dict__.get('expiration_date'),
+                                            updated=whois.query(domain).__dict__.get('last_updated'),
+                                            status=whois.query(domain).__dict__.get('status'),
+                                            ns=whois.query(domain).__dict__.get('name_servers'))
+             elif domain is None:
+                 if re.match(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b", str(host)):
+                     return render_template('ipwhois.html', form=forms.TypeIP(),
+                                            current_time=datetime.utcnow(), real_ip=request.remote_addr,
+                                            data=IPWhois(host).lookup_whois(),address=IPWhois(host).lookup_whois().get('nets')[0].get('address'),
+                                            cidr=IPWhois(host).lookup_whois().get('nets')[0].get('cidr'),
+                                            city=IPWhois(host).lookup_whois().get('nets')[0].get('city'),
+                                            country=IPWhois(host).lookup_whois().get('nets')[0].get('country'),
+                                            created=IPWhois(host).lookup_whois().get('nets')[0].get('created'),
+                                            description=IPWhois(host).lookup_whois().get('nets')[0].get('description'),
+                                            emails=IPWhois(host).lookup_whois().get('nets')[0].get('emails'),
+                                            handle=IPWhois(host).lookup_whois().get('nets')[0].get('handle'),
+                                            name=IPWhois(host).lookup_whois().get('nets')[0].get('name'),
+                                            postal_code=IPWhois(host).lookup_whois().get('nets')[0].get('postal_code'),
+                                            range=IPWhois(host).lookup_whois().get('nets')[0].get('range'),
+                                            state=IPWhois(host).lookup_whois().get('nets')[0].get('state'),
+                                            updated=IPWhois(host).lookup_whois().get('nets')[0].get('updated'),)
+                 else:
+                     return render_template('whois.html', form=forms.TypeIP(),
+                                            current_time=datetime.utcnow(), real_ip=request.remote_addr,
+                                            data=whois.query(host).__dict__,
+                                            name=whois.query(host).__dict__.get('name'),
+                                            reg=whois.query(host).__dict__.get('registrar'),
+                                            create=whois.query(host).__dict__.get('creation_date'),
+                                            expiration=whois.query(host).__dict__.get('expiration_date'),
+                                            updated=whois.query(host).__dict__.get('last_updated'),
+                                            status=whois.query(host).__dict__.get('status'),
+                                            ns=whois.query(host).__dict__.get('name_servers'))
+         except Exception as err:
+             flash(f"Not information about this zone{err}")
+             return MainPage.return_index_page_if_error()
+
+
 
 
 @app.route('/', methods=['GET', 'POST'])

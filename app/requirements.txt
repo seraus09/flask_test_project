@@ -5,3 +5,5 @@ Flask-Bootstrap
 requests
 Flask-WTF
 flask-moment
+whois
+ipwhois

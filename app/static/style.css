@@ -12,19 +12,18 @@ section {
         display: flex;
         padding-top: 15px;
         }
+.back { background: url(static/img/back.jpg);}
 
 h5 {
    font-size: 16px;
-   padding-top: 15px;
+   padding-top: 0px;
    }
 
 img {
-	width: 40px;
-	height: 40px;
+	width: 60px;
+	height: 60px;
 	margin-right: 5px;
 }
 
-th {
-	border-top: 0;
-}
+
 

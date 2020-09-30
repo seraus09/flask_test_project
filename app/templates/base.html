@@ -5,6 +5,11 @@
     {{ super() }}
        <link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon">
        <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+         <style>
+           body { background: url(static/img/2.jpg);
+                  background-size: 100% auto;
+                }
+        </style>
 
     {% endblock styles %}
 
@@ -24,7 +29,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">Main page</a>
+                <a class="navbar-brand" style="color: #E5E7E9;" href="/">Ping-Checker</a>
             </div>
             <div class="navbar-collapse collapse">
             </div>
