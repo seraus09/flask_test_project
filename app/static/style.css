@@ -12,7 +12,9 @@ section {
         display: flex;
         padding-top: 15px;
         }
-.back { background: url(static/img/back.jpg);}
+article {
+        margin-right: 5px;
+}
 
 h5 {
    font-size: 16px;
