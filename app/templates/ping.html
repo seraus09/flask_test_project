@@ -18,6 +18,7 @@
 {% endblock %}
 
 {% block geo %}
+{% if data == None %}
 <div class="page-header">
     <table class="table">
                   <tbody>
@@ -43,23 +44,18 @@
                     </tr>
                     <tr>
                       <th style="border-top: 0" scope="col">35.178.203.123</th>
-                      <td style="border-top: 0">{% if  local  < 4 %}
+                      <td style="border-top: 0">{% if  aws  < 4 %}
                                <div style="color:red;"> {{ aws }} /4 Packet loss</div>
                            {% else %}
                                <div style="color:green;">{{ aws }}/4 ОК</div>
                            {% endif %}</td>
                     </tr>
-                    <tr>
-                      <th scope="col" style="border-top: 0" >Region</th>
-                      <td style="border-top: 0">{{ region }}</td>
-                    </tr>
-                    <tr>
-                      <th scope="col" style="border-top: 0">City</th>
-                      <td style="border-top: 0">{{ city }}</td>
-                    </tr>
+
                   </tbody>
                 </table>
                 </div>
 </div>
-{{ data }}
+{% else %}
+   {{ wtf.quick_form(data) }}
+{% endif %}
 {% endblock %}
