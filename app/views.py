@@ -10,17 +10,18 @@ from urllib.parse import urlparse
 import re
 from ipwhois import IPWhois
 import whois
-
+import redis
 
 
 app = Flask(__name__)
-Bootstrap(app)
-moment = Moment(app)
-
+app.config['RECAPTCHA_USE_SSL']= False
+app.config['RECAPTCHA_PUBLIC_KEY'] = 'enter_your_public_key'
+app.config['RECAPTCHA_PRIVATE_KEY'] = 'enter_your_private_key'
+app.config['RECAPTCHA_OPTIONS'] = {'theme': 'black'}
 app.config['SECRET_KEY'] = '808994589d35d4b4670642b1a3903548'
 api_key = 'e811cf63b4083bb969ac6be16bea5d87'
-
-
+Bootstrap(app)
+moment = Moment(app)
 
 
 class CheckHost():
@@ -69,8 +70,17 @@ class CheckHost():
             return result
 
 
+
 class MainPage():
      """Show information on page"""
+
+     def return_captcha():
+         redis_connects = redis.Redis(db=1)
+         count_ip = redis_connects.incrby(request.remote_addr, 1)
+         max_requests = 10
+         if count_ip >= max_requests:
+             redis_connects.getset(request.remote_addr, 0)
+             return forms.Captcha()
 
      def get_information_from_form():
          form = forms.TypeIP()
@@ -85,7 +95,7 @@ class MainPage():
          ip = CheckHost(form.field_data.data)
          data = CheckHost.get_ping(ip)
          return render_template('ping.html', form=form,current_time=datetime.utcnow(),
-                                local=int(data[0]), virt=int(data[1]),real_ip=request.remote_addr)
+                                local=int(data[0]), virt=int(data[1]),aws=int(data[2]),real_ip=request.remote_addr, data=MainPage.return_captcha())
 
 
      def return_index_page_if_error():
@@ -170,6 +180,10 @@ class MainPage():
          except Exception as err:
              flash(f"Not information about this zone{err}")
              return MainPage.return_index_page_if_error()
+
+
+
+
 
 
 
