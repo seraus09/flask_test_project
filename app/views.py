@@ -15,8 +15,8 @@ import redis
 
 app = Flask(__name__)
 app.config['RECAPTCHA_USE_SSL']= False
-app.config['RECAPTCHA_PUBLIC_KEY'] = 'enter_your_public_key'
-app.config['RECAPTCHA_PRIVATE_KEY'] = 'enter_your_private_key'
+app.config['RECAPTCHA_PUBLIC_KEY'] = '6LfyU9QZAAAAAAs3KQeadgQb_nQKYdAYp3L1jigp'
+app.config['RECAPTCHA_PRIVATE_KEY'] = '6LfyU9QZAAAAAI8wK50grPWs55RpNrGlp0KOh-7s'
 app.config['RECAPTCHA_OPTIONS'] = {'theme': 'black'}
 app.config['SECRET_KEY'] = '808994589d35d4b4670642b1a3903548'
 api_key = 'e811cf63b4083bb969ac6be16bea5d87'
@@ -75,7 +75,7 @@ class MainPage():
      """Show information on page"""
 
      def return_captcha():
-         redis_connects = redis.Redis(host="172.17.0.3", port=6379, db=1)
+         redis_connects = redis.Redis(host="172.17.0.2", port=6379, db=1)
          count_ip = redis_connects.incrby(request.remote_addr, 1)
          max_requests = 10
          if count_ip >= max_requests:
