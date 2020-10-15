@@ -79,7 +79,7 @@ class MainPage():
          count_ip = redis_connects.incrby(request.remote_addr, 1)
          max_requests = 10
          if count_ip >= max_requests:
-             redis_connects.getset(request.remote_addr, 0)
+             #redis_connects.getset(request.remote_addr, 0)
              return forms.Captcha()
 
      def get_information_from_form():
@@ -92,6 +92,7 @@ class MainPage():
      def return_ping_page():
          """Return information from the 'ping' button"""
          form = forms.TypeIP()
+         capthca = forms.Captcha()
          ip = CheckHost(form.field_data.data)
          data = CheckHost.get_ping(ip)
          return render_template('ping.html', form=form,current_time=datetime.utcnow(),
@@ -177,6 +178,10 @@ class MainPage():
                                             updated=whois.query(host).__dict__.get('last_updated'),
                                             status=whois.query(host).__dict__.get('status'),
                                             ns=whois.query(host).__dict__.get('name_servers'))
+             else:
+                 flash(f"Not information about this zone")
+                 return MainPage.return_index_page_if_error()
+
          except Exception as err:
              flash(f"Not information about this zone{err}")
              return MainPage.return_index_page_if_error()
