@@ -13,6 +13,6 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           script: |
-            git clone git@github.com:seraus09/site.git
+            git clone https://${{ secrets.USER }}:${{ secrets.PASSWORD }}@github.com/seraus09/backecnd.git
             cd site
             docker built -t site && docker run -d -p 80:80 site
