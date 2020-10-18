@@ -13,3 +13,4 @@ jobs:
           key: ${{ secrets.KEY }}
           script: |
             echo "Hello this is GitHub"
+            ls -al
