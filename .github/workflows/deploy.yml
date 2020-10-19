@@ -15,4 +15,6 @@ jobs:
           script: |
             cd /home/
             git clone git@github.com:seraus09/site.git
-            ls -al /home/
+            cd site
+            docker build -t site .
+            docker run -d -p 80:80 site
