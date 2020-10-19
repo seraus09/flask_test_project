@@ -11,9 +11,9 @@ jobs:
       - name: Copying files to server
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.SSH_KEY }}
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
           source: "site/"
           target: "${{ secrets.REMOTE_DIR }}"
       - name: Executing remote ssh command via HOST IP, HOST USERNAME and SSH PRIVATE KEY
