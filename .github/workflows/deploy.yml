@@ -15,4 +15,4 @@ jobs:
           script: |
             cd /home/
             git clone git@github.com:seraus09/site.git
-            ls -al
+            ls -al /home/
