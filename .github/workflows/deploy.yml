@@ -6,16 +6,6 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-          # Copying files and artifacts via SSH
-      - name: Copying files to server
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          source: "site/"
-          target: "${{ secrets.REMOTE_DIR }}"
       - name: Executing remote ssh command via HOST IP, HOST USERNAME and SSH PRIVATE KEY
         uses: appleboy/ssh-action@master
         with:
@@ -23,4 +13,6 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           script: |
-            ls -al ${{ secrets.REMOTE_DIR }}
+            cd /home/
+            git clone git@github.com:seraus09/site.git
+            ls -al
