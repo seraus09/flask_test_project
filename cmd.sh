@@ -1,14 +1,10 @@
 #!/bin/bash
-set -e
-if [ "$ENV" = 'DEV' ]; then
-    echo "Running Development Server" # Запуск сервера для разработки
-    exec python "app.py"
 
-elif [ "$ENV" = 'UNIT' ]; then
-    echo "Running Unit Tests"
-    exec python "test.py"
+repo=('git@github.com:seraus09/site.git')
 
+if [ -d "/home/site" ]
+then
+    cd /home/site && git pull $repo && docker-compose build && docker-compose up -d
 else
-    echo "Running Production Server" # Запуск сервера для эксплуатации
-    exec python3 /app/app.py 
+    echo "Error: Directory does not exists."
 fi
