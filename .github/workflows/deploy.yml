@@ -15,6 +15,7 @@ jobs:
           script: |
             cd /home/
             git clone git@github.com:seraus09/site.git
-            cd site
-            docker build -t site .
-            docker run -d -p 80:80 site
+            cd site && chmod +x cmd.sh
+            /usr/bin/bash cmd.sh
+            
+            
