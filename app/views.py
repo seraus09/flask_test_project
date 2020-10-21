@@ -57,7 +57,7 @@ class CheckHost():
     def get_ping(self):
         thread = concurrent.futures.ThreadPoolExecutor()
         get_host = CheckHost.get_clean_hostname(self)
-        nodes = ['91.201.25.57','185.250.206.220']
+        nodes = ['185.250.206.220']
         result = []
         try:
             url = lambda node: requests.get(f'http://{node}/api/v1.0/tasks/{get_host}', auth=('sera', '12345'))
@@ -75,7 +75,7 @@ class MainPage():
      """Show information on page"""
 
      def return_captcha():
-         redis_connects = redis.Redis(host="172.17.0.2", port=6379, db=1)
+         redis_connects = redis.Redis(host="10.10.0.2", port=6379, db=1)
          count_ip = redis_connects.incrby(request.remote_addr, 1)
          max_requests = 10
          if count_ip >= max_requests:
@@ -96,7 +96,7 @@ class MainPage():
          ip = CheckHost(form.field_data.data)
          data = CheckHost.get_ping(ip)
          return render_template('ping.html', form=form,current_time=datetime.utcnow(),
-                                local=int(data[0]), virt=int(data[1]),aws=int(data[2]),real_ip=request.remote_addr, data=MainPage.return_captcha())
+                                local=int(data[0]), virt=int(0),aws=int(0),real_ip=request.remote_addr, data=MainPage.return_captcha())
 
 
      def return_index_page_if_error():
