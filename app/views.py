@@ -79,7 +79,7 @@ class MainPage():
          count_ip = redis_connects.incrby(request.remote_addr, 1)
          max_requests = 10
          if count_ip >= max_requests:
-             #redis_connects.getset(request.remote_addr, 0)
+             redis_connects.getset(request.remote_addr, 0)
              return forms.Captcha()
 
      def get_information_from_form():
