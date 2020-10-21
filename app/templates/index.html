@@ -17,9 +17,10 @@
     <p>The local date and time is {{ moment(current_time).format('LLL') }}.</p>
     <p>Your IP is {{ real_ip }} </p>
 </div>
+
+
 {{ wtf.quick_form(form) }}
 {% endblock %}
-
 {% block geo %}
 
 <div class="page-header">
