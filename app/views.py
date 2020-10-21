@@ -15,8 +15,8 @@ import redis
 
 app = Flask(__name__)
 app.config['RECAPTCHA_USE_SSL']= False
-app.config['RECAPTCHA_PUBLIC_KEY'] = '6LfyU9QZAAAAAAs3KQeadgQb_nQKYdAYp3L1jigp'
-app.config['RECAPTCHA_PRIVATE_KEY'] = '6LfyU9QZAAAAAI8wK50grPWs55RpNrGlp0KOh-7s'
+app.config['RECAPTCHA_PUBLIC_KEY'] = '6LdRANUZAAAAAKkGyVCKZjVoq1zd2hs0PEJGgUMJ'
+app.config['RECAPTCHA_PRIVATE_KEY'] = '6LdRANUZAAAAAOh401seSKzGlrRJudyH7D3QW_Tj'
 app.config['RECAPTCHA_OPTIONS'] = {'theme': 'black'}
 app.config['SECRET_KEY'] = '808994589d35d4b4670642b1a3903548'
 api_key = 'e811cf63b4083bb969ac6be16bea5d87'
