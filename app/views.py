@@ -79,7 +79,6 @@ class MainPage():
          count_ip = redis_connects.incrby(request.remote_addr, 1)
          max_requests = 10
          if count_ip >= max_requests:
-             redis_connects.getset(request.remote_addr, 0)
              return forms.Captcha()
 
      def get_information_from_form():
@@ -189,10 +188,6 @@ class MainPage():
 
 
 
-
-
-
-
 @app.route('/', methods=['GET', 'POST'])
 def return_index_page():
     try:
@@ -206,7 +201,13 @@ def return_index_page():
                 return MainPage.return_check_page()
 
         elif form.validate_on_submit() == form.ping.data and request.method == 'POST':
-            return MainPage.return_ping_page()
+            if MainPage.return_captcha() is None:
+                return MainPage.return_ping_page()
+            else:
+                if forms.Captcha().validate_on_submit():
+                    redis_connects = redis.Redis(host="10.10.0.2", port=6379, db=1)
+                    redis_connects.getset(request.remote_addr, 0)
+
 
         elif form.validate_on_submit() == form.whois.data and request.method == 'POST':
             return MainPage.return_whois_page()
