@@ -207,6 +207,7 @@ def return_index_page():
                 if forms.Captcha().validate_on_submit():
                     redis_connects = redis.Redis(host="10.10.0.2", port=6379, db=1)
                     redis_connects.getset(request.remote_addr, 0)
+                    return MainPage.return_ping_page()
 
 
         elif form.validate_on_submit() == form.whois.data and request.method == 'POST':
