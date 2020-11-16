@@ -68,7 +68,7 @@ class CheckHost():
         finally:
             result.append(0)
             return result
-
+    
 
 
 class MainPage():

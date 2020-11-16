@@ -9,6 +9,18 @@
 {% block scripts %}
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script src='https://www.google.com/recaptcha/api.js' async defer></script>
+<script> function checkRecaptcha() {
+  var response = grecaptcha.getResponse();
+  if(response.length == 0) {
+    //reCaptcha not verified
+    alert("no pass");
+  }
+  else {
+    //reCaptch verified
+    alert("pass");
+  }
+}
+</script>
 {%- endblock scripts %}
 {% endblock %}
 {% block page_content  %}
@@ -61,27 +73,18 @@
 </div>
 {% else %}
 <div class="page-header">
-   <div class="g-recaptcha" data-sitekey={{ public_key }}></div>
+   <div class="g-recaptcha" data-sitekey="6LcQiuMZAAAAAP_3gu9YVfyfow8HDHAfrbf1g8Xb"></div>
     <script>
-        function checkRecaptcha() {
-          var response = grecaptcha.getResponse();
-          if(response.length == 0) {
-            //reCaptcha not verified
-            alert("no pass");
-          }
-          else {
-            //reCaptch verified
-            alert("pass");
-          }
-        }
-
+        document.getElementById('ping').onclick = function() {
+          checkRecaptcha();
+        };
         // implement on the backend
         function backend_API_challenge() {
             var response = grecaptcha.getResponse();
             $.ajax({
                 type: "POST",
                 url: 'https://www.google.com/recaptcha/api/siteverify',
-                data: {"secret" : {{ privat }}, "response" : response, "remoteip":{{ remote_ip }}},
+                data: {"secret" : "6LcQiuMZAAAAAODI0Mvm8xkWfxqQcqJreUSDArRC", "response" : response, "remoteip": 'localhost' },
                 contentType: 'application/x-www-form-urlencoded',
                 success: function(data) { console.log(data); }
             });
