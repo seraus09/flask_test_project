@@ -1,5 +1,5 @@
-from flask_wtf import FlaskForm, RecaptchaField
-from wtforms import StringField, SubmitField, SelectField
+from flask_wtf import FlaskForm, RecaptchaField, validators
+from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, Length
 
 class TypeIP(FlaskForm):
@@ -8,8 +8,8 @@ class TypeIP(FlaskForm):
     ping = SubmitField('Ping')
     whois = SubmitField('Whois')
 
-class Captcha(FlaskForm):
-    recaptca = RecaptchaField()
+
+
 
 
 

@@ -79,8 +79,8 @@ class MainPage():
          count_ip = redis_connects.incrby(request.remote_addr, 1)
          max_requests = 3
          if count_ip >= max_requests:
-             #redis_connects.getset(request.remote_addr, 0)
-             return forms.Captcha()
+             return True
+     
 
      def get_information_from_form():
          form = forms.TypeIP()
@@ -92,11 +92,12 @@ class MainPage():
      def return_ping_page():
          """Return information from the 'ping' button"""
          form = forms.TypeIP()
-         capthca = forms.Captcha()
          ip = CheckHost(form.field_data.data)
          data = CheckHost.get_ping(ip)
          return render_template('ping.html', form=form,current_time=datetime.utcnow(),
-                                local=int(data[0]), virt=int(0),aws=int(0),real_ip=request.remote_addr, data=MainPage.return_captcha())
+                                local=int(data[0]), virt=int(0),aws=int(0),real_ip=request.remote_addr, data=MainPage.return_captcha(),
+                                public_key=app.config['RECAPTCHA_PUBLIC_KEY'], privat = app.config['RECAPTCHA_PRIVATE_KEY'],
+                                remote_ip = request.remote_addr)
 
 
      def return_index_page_if_error():
@@ -202,16 +203,8 @@ def return_index_page():
                 return MainPage.return_check_page()
 
         elif form.validate_on_submit() == form.ping.data and request.method == 'POST':
-            if MainPage.return_captcha() is None:
-                return MainPage.return_ping_page()
+            return MainPage.return_ping_page()
 
-            elif forms.Captcha().validate():
-                    redis_connects = redis.Redis(host="10.10.0.2", port=6379, db=1)
-                    redis_connects.getset(request.remote_addr, 0)
-                    return MainPage.return_ping_page()
-            else:
-                flash('error')
-                return MainPage.return_index_page_if_error()
 
 
         elif form.validate_on_submit() == form.whois.data and request.method == 'POST':
@@ -228,3 +221,4 @@ def return_index_page():
 
 if __name__ ==  '__main__':
     app.run(debug=True, host='0.0.0.0')
+

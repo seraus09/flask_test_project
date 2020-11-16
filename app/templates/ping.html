@@ -6,6 +6,10 @@
 {{ super() }}
 <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
 {% endblock styles %}
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src='https://www.google.com/recaptcha/api.js' async defer></script>
+{%- endblock scripts %}
 {% endblock %}
 {% block page_content  %}
 <div class="page-header">
@@ -56,6 +60,33 @@
                 </div>
 </div>
 {% else %}
-   {{ wtf.quick_form(data) }}
+<div class="page-header">
+   <div class="g-recaptcha" data-sitekey={{ public_key }}></div>
+    <script>
+        function checkRecaptcha() {
+          var response = grecaptcha.getResponse();
+          if(response.length == 0) {
+            //reCaptcha not verified
+            alert("no pass");
+          }
+          else {
+            //reCaptch verified
+            alert("pass");
+          }
+        }
+
+        // implement on the backend
+        function backend_API_challenge() {
+            var response = grecaptcha.getResponse();
+            $.ajax({
+                type: "POST",
+                url: 'https://www.google.com/recaptcha/api/siteverify',
+                data: {"secret" : {{ privat }}, "response" : response, "remoteip":{{ remote_ip }}},
+                contentType: 'application/x-www-form-urlencoded',
+                success: function(data) { console.log(data); }
+            });
+        }
+    </script>
+</div>
 {% endif %}
 {% endblock %}
