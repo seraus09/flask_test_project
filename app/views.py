@@ -218,21 +218,15 @@ def return_index_page():
         flash(f'Ooops... Something went wrong !!! {error}')
         return MainPage.return_index_page_if_error()
 
-######## Data fetch ############
-@app.route('/getdata/<index_no>', methods=['GET','POST'])
+@app.route('/getdata/<index_no>', methods=['POST'])
 def data_get(index_no):
+    """Data fetch from js function"""
     if request.method == 'POST': # POST request
-        a  = index_no
-        if a == 'Ok':
+        status  = index_no
+        if status == 'Ok':
             redis_connects = redis.Redis(host="10.10.0.2", port=6379, db=1)
             redis_connects.getset(request.remote_addr, 0)
-            return "Ok"
-        else:
-            return "Err,{0}".format(index_no)
     
-    else: # GET request
-        return 'OK'
-
 
 if __name__ ==  '__main__':
     app.run(debug=True, host='0.0.0.0')
