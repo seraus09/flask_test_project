@@ -79,6 +79,7 @@ class MainPage():
          count_ip = redis_connects.incrby(request.remote_addr, 1)
          max_requests = 3
          if count_ip >= max_requests:
+             #redis_connects.getset(request.remote_addr, 0)
              return True
      
 
@@ -217,6 +218,20 @@ def return_index_page():
         flash(f'Ooops... Something went wrong !!! {error}')
         return MainPage.return_index_page_if_error()
 
+######## Data fetch ############
+@app.route('/getdata/<index_no>', methods=['GET','POST'])
+def data_get(index_no):
+    if request.method == 'POST': # POST request
+        a  = index_no
+        if a == 'Ok':
+            redis_connects = redis.Redis(host="10.10.0.2", port=6379, db=1)
+            redis_connects.getset(request.remote_addr, 0)
+            return "Ok"
+        else:
+            return "Err,{0}".format(index_no)
+    
+    else: # GET request
+        return 'OK'
 
 
 if __name__ ==  '__main__':

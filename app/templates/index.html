@@ -22,6 +22,16 @@
 {{ wtf.quick_form(form) }}
 {% endblock %}
 {% block geo %}
+<script>
+ var index = 33;
+fetch(`/getdata/${index}`, {method: 'GET'})
+      .then(function (response) {
+          return response.text();
+      }).then(function (text) {
+          console.log('GET response text:');
+          console.log(text); 
+      });
+</script>
 
 <div class="page-header">
  <h3><img src="static/img/about1.png">About</h3>
@@ -51,6 +61,8 @@
 
  </section>
 </div>
+
+{{ data }}
 
 {% endblock %}
 </div>

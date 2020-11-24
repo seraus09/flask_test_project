@@ -64,15 +64,33 @@
 <div class="page-header">
    <div class="g-recaptcha" data-sitekey="6LcQiuMZAAAAAP_3gu9YVfyfow8HDHAfrbf1g8Xb"></div>
     <script>
+        function sendRecaptchaStatus(status) {
+        fetch(`/getdata/${status}`, {method: 'POST'})
+              .then(function (response) {
+                  return response.text();
+              }).then(function (text) {
+                  console.log('GET response text:');
+                  console.log(text); 
+              });
+        }  
+        
+
       function checkRecaptcha() {
         var response = grecaptcha.getResponse();
         if(response.length == 0) {
           //reCaptcha not verified
-          alert("no pass");
+          alert('No pass');
         }
         else {
           //reCaptch verified
-          alert("pass");
+          let status = 'Ok';
+          fetch(`/getdata/${status}`, {method: 'POST'})
+              .then(function (response) {
+                  return response.text();
+              }).then(function (text) {
+                  console.log('GET response text:');
+                  console.log(text); 
+              });
         } 
       }
         
