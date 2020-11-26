@@ -8,6 +8,8 @@ class TypeIP(FlaskForm):
     ping = SubmitField('Ping')
     whois = SubmitField('Whois')
 
+class Recaptacha(FlaskForm):
+    recaptacha = RecaptchaField()
 
 
 

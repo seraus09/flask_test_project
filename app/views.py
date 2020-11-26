@@ -10,13 +10,13 @@ from urllib.parse import urlparse
 import re
 from ipwhois import IPWhois
 import whois
-import redis
+from settings import *
 
 
 app = Flask(__name__)
 app.config['RECAPTCHA_USE_SSL']= False
-app.config['RECAPTCHA_PUBLIC_KEY'] = '6LdRANUZAAAAAKkGyVCKZjVoq1zd2hs0PEJGgUMJ'
-app.config['RECAPTCHA_PRIVATE_KEY'] = '6LdRANUZAAAAAOh401seSKzGlrRJudyH7D3QW_Tj'
+app.config['RECAPTCHA_PUBLIC_KEY'] = '6LcQiuMZAAAAAP_3gu9YVfyfow8HDHAfrbf1g8Xb'
+app.config['RECAPTCHA_PRIVATE_KEY'] = '6LcQiuMZAAAAAODI0Mvm8xkWfxqQcqJreUSDArRC'
 app.config['RECAPTCHA_OPTIONS'] = {'theme': 'black'}
 app.config['SECRET_KEY'] = '808994589d35d4b4670642b1a3903548'
 api_key = 'e811cf63b4083bb969ac6be16bea5d87'
@@ -75,12 +75,10 @@ class MainPage():
      """Show information on page"""
 
      def return_captcha():
-         redis_connects = redis.Redis(host="10.10.0.2", port=6379, db=1)
-         count_ip = redis_connects.incrby(request.remote_addr, 1)
+         count_ip = REDIS_CONNECT.incrby(request.remote_addr, 1)
          max_requests = 3
          if count_ip >= max_requests:
-             #redis_connects.getset(request.remote_addr, 0)
-             return True
+             return forms.Recaptacha()
      
 
      def get_information_from_form():
@@ -96,9 +94,7 @@ class MainPage():
          ip = CheckHost(form.field_data.data)
          data = CheckHost.get_ping(ip)
          return render_template('ping.html', form=form,current_time=datetime.utcnow(),
-                                local=int(data[0]), virt=int(0),aws=int(0),real_ip=request.remote_addr, data=MainPage.return_captcha(),
-                                public_key=app.config['RECAPTCHA_PUBLIC_KEY'], privat = app.config['RECAPTCHA_PRIVATE_KEY'],
-                                remote_ip = request.remote_addr)
+                                local=int(data[0]), virt=int(0),aws=int(0),real_ip=request.remote_addr, data=MainPage.return_captcha())
 
 
      def return_index_page_if_error():
@@ -188,9 +184,6 @@ class MainPage():
              flash(f"Not information about this zone{err}")
              return MainPage.return_index_page_if_error()
 
-
-
-
 @app.route('/', methods=['GET', 'POST'])
 def return_index_page():
     try:
@@ -224,8 +217,7 @@ def data_get(index_no):
     if request.method == 'POST': # POST request
         status  = index_no
         if status == 'Ok':
-            redis_connects = redis.Redis(host="10.10.0.2", port=6379, db=1)
-            redis_connects.getset(request.remote_addr, 0)
+            REDIS_CONNECT.getset(request.remote_addr, 0)
     
 
 if __name__ ==  '__main__':
