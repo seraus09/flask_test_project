@@ -76,7 +76,7 @@ class MainPage():
 
      def return_captcha():
          count_ip = REDIS_CONNECT.incrby(request.remote_addr, 1)
-         max_requests = 3
+         max_requests = 6
          if count_ip >= max_requests:
              return forms.Recaptacha()
      
@@ -200,7 +200,6 @@ def return_index_page():
             return MainPage.return_ping_page()
 
 
-
         elif form.validate_on_submit() == form.whois.data and request.method == 'POST':
             return MainPage.return_whois_page()
 
@@ -211,15 +210,17 @@ def return_index_page():
         flash(f'Ooops... Something went wrong !!! {error}')
         return MainPage.return_index_page_if_error()
 
+
 @app.route('/getdata/<index_no>', methods=['POST'])
 def data_get(index_no):
     """Data fetch from js function"""
     if request.method == 'POST': # POST request
-        status  = index_no
-        if status == 'Ok':
+        len_key  = len(index_no)
+        if len_key == 484:
             REDIS_CONNECT.getset(request.remote_addr, 0)
     
 
 if __name__ ==  '__main__':
     app.run(debug=True, host='0.0.0.0')
+
 

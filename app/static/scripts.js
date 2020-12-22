@@ -6,8 +6,7 @@ function checkRecaptcha() {
     }
     else {
       //reCaptch verified
-      let status = 'Ok';
-      fetch(`/getdata/${status}`, {method: 'POST'})
+      fetch(`/getdata/${response}`, {method: 'POST'})
           .then(function (response) {
               return response.text();
           });
