@@ -1,0 +1,14 @@
+.header {
+    margin-left: auto;
+    margin-right: auto;
+
+    height: 700px; /* Высота блока */
+    width: 1300px; /* Ширина блока */
+    display: block;
+    background: url(static/header.png); 
+ }
+ .text {
+   margin-left: 100px;
+   padding-top: 10px;
+   color:#2d403c;
+ }

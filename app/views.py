@@ -13,13 +13,9 @@ import whois
 from settings import *
 
 
+
 app = Flask(__name__)
-app.config['RECAPTCHA_USE_SSL']= False
-app.config['RECAPTCHA_PUBLIC_KEY'] = '6LcQiuMZAAAAAP_3gu9YVfyfow8HDHAfrbf1g8Xb'
-app.config['RECAPTCHA_PRIVATE_KEY'] = '6LcQiuMZAAAAAODI0Mvm8xkWfxqQcqJreUSDArRC'
-app.config['RECAPTCHA_OPTIONS'] = {'theme': 'black'}
-app.config['SECRET_KEY'] = '808994589d35d4b4670642b1a3903548'
-api_key = 'e811cf63b4083bb969ac6be16bea5d87'
+app.config.from_pyfile('settings.py')
 Bootstrap(app)
 moment = Moment(app)
 
@@ -41,7 +37,7 @@ class CheckHost():
 
     def get_result_from_api_ipstack(self):
         ip = CheckHost.get_clean_hostname(self)
-        url = requests.get(f'http://api.ipstack.com/{ip}?access_key={api_key}') #get api request
+        url = requests.get(f'http://api.ipstack.com/{ip}?access_key={API_KEY}') #get api request
         if url.status_code == 200:
             return url.json()
 
@@ -208,7 +204,9 @@ def return_index_page():
 
     except Exception as error:
         flash(f'Ooops... Something went wrong !!! {error}')
+
         return MainPage.return_index_page_if_error()
+        
 
 
 @app.route('/getdata/<index_no>', methods=['POST'])

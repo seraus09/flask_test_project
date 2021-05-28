@@ -8,3 +8,5 @@ flask-moment
 whois
 ipwhois
 redis
+loguru
+python-dotenv==0.17.0
