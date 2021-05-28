@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@1,600&display=swap');
+
 .header {
     margin-left: auto;
     margin-right: auto;
@@ -7,8 +9,17 @@
     display: block;
     background: url(static/header.png); 
  }
- .text {
-   margin-left: 100px;
-   padding-top: 10px;
-   color:#2d403c;
+
+ .menu{
+   padding-top: 20px;
+   margin-left: 150px;
  }
+ 
+ 
+.link {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 30px;
+  text-decoration: none;
+  color:#2d403c;
+ }
+ 
