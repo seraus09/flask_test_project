@@ -1,14 +1,12 @@
 import './App.css';
-import {Link} from 'react-router-dom';
+import Menu from './Menu.js';
 
 
 function App() {
   return (
     <div className="header">
       <header className="header">
-        <div className="menu">
-          <Link className="link" to = '/'>Ping-checker</Link> 
-        </div> 
+        <Menu/>
       </header>
     </div>
   );

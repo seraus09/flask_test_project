@@ -13,6 +13,8 @@
  .menu{
    padding-top: 20px;
    margin-left: 150px;
+   display: inline-block;
+
  }
  
  
@@ -23,3 +25,29 @@
   color:#2d403c;
  }
  
+ .link-tools{
+  font-family: 'Open Sans', sans-serif;
+  font-size: 30px;
+  text-decoration: none;
+  color:#2d403c;
+  margin-left: 220px;
+ }
+
+ .link-log{
+  font-family: 'Open Sans', sans-serif;
+  font-size: 30px;
+  text-decoration: none;
+  color:#2d403c;
+  padding-left: 340px;
+ }
+ .link-sig{
+  font-family: 'Open Sans', sans-serif;
+  font-size: 30px;
+  text-decoration: none;
+  color:white;
+  margin-left: 29px;
+  width: 100px;	height: 100px; /* Размеры */
+  background:#2d403c; /* Цвет фона */
+  outline: 2px solid #000; /* Чёрная рамка */
+  
+ }
