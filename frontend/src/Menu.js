@@ -4,12 +4,12 @@ import './App.css';
 
 export const Menu = () => {
     return(
-        <div className="menu">
+        <nav className="menu">
           <Link className="link" to = '/'>Ping-checker</Link> 
           <Link className="link-tools">Tools</Link>
           <Link className="link-log">Login</Link>
           <Link className="link-sig">Signup</Link>
-        </div>
+        </nav>
     )
 }
 export default Menu;
