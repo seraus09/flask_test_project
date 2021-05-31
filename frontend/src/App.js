@@ -1,11 +1,11 @@
 import './App.css';
 import Menu from './Menu.js';
+import Scroll from './Scroll.js';
 
 
 function App() {
   return (
     <body>
-    <div className="header">
       <header className="header">
         <Menu/>
         <div className="text-top">
@@ -22,7 +22,12 @@ function App() {
         <p className="p">  records (also known as AAAA record).</p>
       </div>
       </header>
+    <div className="features">
+      <p>
+        Features Overview
+      </p>
     </div>
+     <Scroll text/>
     </body>
   );
 };

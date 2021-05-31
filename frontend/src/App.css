@@ -70,4 +70,15 @@
   padding-left: 338px;
   padding-top: 10px;
  }
- 
+
+ .features{
+  font-family: 'Open Sans', sans-serif;
+  font-size: 30px;
+  padding-left: 777px;  
+  margin-top: -40px;
+
+ }
+ .scroll{
+  padding-left: 760px; 
+  display: inline-block;
+ }
