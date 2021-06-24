@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@1,600&display=swap');
 
 
-
+body{
+  background:#f3fbff;
+}
 
 .header {
     margin-left: auto;
@@ -41,19 +43,27 @@
   font-size: 30px;
   text-decoration: none;
   color:#2d403c;
-  padding-left: 340px;
+  margin-left: 340px;
  }
  .link-sig{
   font-family: 'Open Sans', sans-serif;
   font-size: 30px;
   text-decoration: none;
-  color:white;
+  color:#2d403c;
   margin-left: 29px;
-  width: 100px;	height: 100px; /* Размеры */
-  background:#2d403c; /* Цвет фона */
-  outline: 2px solid #000; /* Чёрная рамка */
-  
+
  }
+ .link:hover,
+ .link-log:hover,
+ .link-tools:hover,
+ .link-sig:hover{
+  width:  auto;	height: auto; /* Размеры */
+  background:#2d403c; /* Цвет фона */
+  color: white;
+  outline: 2px solid #000; /* Чёрная рамка */
+  transition:all 0.5s;
+  cursor:pointer;
+}
  .text-top{
   font-family: 'Open Sans', sans-serif;
   font-size: 25px;
@@ -66,8 +76,8 @@
 
  .text-bottom{
   font-family: 'Open Sans', sans-serif;
-  font-size: 18px;
-  padding-left: 338px;
+  font-size: 20px;
+  padding-left: 300px;
   padding-top: 10px;
  }
 
@@ -79,6 +89,60 @@
 
  }
  .scroll{
-  padding-left: 760px; 
-  display: inline-block;
+  padding-left: 560px; 
+  display: flex; 
+}
+
+.block{
+  margin-left: 160px;
+}
+#line {
+  border-bottom:solid transparent 5px;
+  transition:all 0.5s;
+  
+}
+#line:hover{
+  cursor:pointer;
+  border-bottom:solid #227969 5px;
+ 
+  
+}
+
+.scroll_text{
+  font-family: 'Open Sans', sans-serif;
+  padding-left: 30px;
+  margin-top: -3px;
+}
+
+hr{
+  margin-top: 0px;
+  width: 1200px;
+}
+
+.text{
+  position: absolute;
+  font-family: 'Open Sans', sans-serif;
+  width: 500px;
+  height: 130px;
+  font-size: 18px;
+  padding-left: 10px;
+  
+ }
+ .text1{
+  position: absolute;
+  font-family: 'Open Sans', sans-serif;
+  width: 500px;
+  height: 230px;
+  font-size: 18px;
+  margin-left: -250px;
+  
+ }
+ .text2{
+  position: absolute;
+  font-family: 'Open Sans', sans-serif;
+  width: 500px;
+  height: 230px;
+  font-size: 18px;
+  margin-left: -500px;
+  
  }

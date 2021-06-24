@@ -5,10 +5,10 @@ import './App.css';
 export const Menu = () => {
     return(
         <nav className="menu">
-          <Link className="link" to = '/'>Ping-checker</Link> 
-          <Link className="link-tools">Tools</Link>
-          <Link className="link-log">Login</Link>
-          <Link className="link-sig">Signup</Link>
+          <Link  className="link" to = '/'>Ping-checker</Link> 
+          <Link  className="link-tools">Tools</Link>
+          <Link  className="link-log">Login</Link>
+          <Link  className="link-sig">Signup</Link>
         </nav>
     )
 }

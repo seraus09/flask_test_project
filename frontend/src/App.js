@@ -3,17 +3,19 @@ import Menu from './Menu.js';
 import Scroll from './Scroll.js';
 
 
+
 function App() {
+  
   return (
     <body>
       <header className="header">
         <Menu/>
         <div className="text-top">
           <p>
-          Ping-Checker is a modern online tool for website monitoring
+            Ping-Checker is a modern online tool for website monitoring
           </p>
           <p className="p">
-          and  checking availability of hosts, IP addresses.
+            and  checking availability of hosts, IP addresses.
          </p>
       </div>
       <div className="text-bottom">
@@ -27,7 +29,9 @@ function App() {
         Features Overview
       </p>
     </div>
-     <Scroll text/>
+     <Scroll/>
+     <hr></hr>
+     
     </body>
   );
 };
