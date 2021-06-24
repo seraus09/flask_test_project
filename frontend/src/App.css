@@ -8,16 +8,20 @@ body{
 .header {
     margin-left: auto;
     margin-right: auto;
+    height: 580px; /* Высота блока */
+    width: 100vw; /* Ширина блока */
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%,0 calc(100% - 5vw));
+    position: relative;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-image:  linear-gradient(to top, rgba(161, 184, 157, 0.6), rgba(11, 226, 83, 0.918));
 
-    height: 700px; /* Высота блока */
-    width: 1300px; /* Ширина блока */
-    display: block;
-    background: url(static/header.png); 
  }
-
  .menu{
+   align: center;
    padding-top: 20px;
-   margin-left: 150px;
+   margin-left: 850px;
    display: inline-block;
 
  }
@@ -35,7 +39,7 @@ body{
   font-size: 30px;
   text-decoration: none;
   color:#2d403c;
-  margin-left: 220px;
+  margin-left: 20px;
  }
 
  .link-log{
@@ -43,7 +47,7 @@ body{
   font-size: 30px;
   text-decoration: none;
   color:#2d403c;
-  margin-left: 340px;
+  margin-left: 650px;
  }
  .link-sig{
   font-family: 'Open Sans', sans-serif;
@@ -67,7 +71,7 @@ body{
  .text-top{
   font-family: 'Open Sans', sans-serif;
   font-size: 25px;
-  padding-left: 270px;
+  padding-left: 620px;
   padding-top: 110px;
  }
  .p {
@@ -77,7 +81,7 @@ body{
  .text-bottom{
   font-family: 'Open Sans', sans-serif;
   font-size: 20px;
-  padding-left: 300px;
+  padding-left: 650px;
   padding-top: 10px;
  }
 
@@ -146,3 +150,4 @@ hr{
   margin-left: -500px;
   
  }
+ 
