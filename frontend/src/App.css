@@ -116,6 +116,7 @@ body{
   font-family: 'Open Sans', sans-serif;
   padding-left: 30px;
   margin-top: -3px;
+  display: block;
 }
 
 hr{
@@ -151,3 +152,59 @@ hr{
   
  }
  
+ .tools_header {
+  margin-left: auto;
+  margin-right: auto;
+  height: 80px; /* Высота блока */
+  width: 100vw; /* Ширина блока */
+  background-size: cover;
+  background-attachment: fixed;
+  background-image:  linear-gradient(to top, rgba(161, 184, 157, 0.6), rgba(11, 226, 83, 0.918));
+
+}
+
+.input{
+  margin-top: 150px;
+  margin-left: 700px;
+  width: 500px;
+  height: 35px;
+  border-radius:10px;
+  font-family:inherit;
+  font-size: 20px;
+}
+button{
+  box-sizing: border-box;
+  border-radius:5px;
+  font-size: 15px;
+  font-family:inherit;
+  margin-top: 10px;
+  margin-left: 700px;
+  width: 65px;
+  height: 30px;
+  text-decoration: none;
+  display: inline-block;
+  color:#2d403c;
+  letter-spacing: 2px;
+  background-image:  linear-gradient(to right, rgba(98, 207, 78, 0.6), rgba(12, 116, 47, 0.918));
+  background-size: 200% auto;
+  box-shadow: 0 0 20px rgba(0, 0, 0, .1);
+  transition: .5s;
+}
+
+.button_whois,
+.button_ping{
+  margin-left: 10px;
+  text-decoration: none;
+  display: inline-block;
+  color:#2d403c;
+  letter-spacing: 2px;
+  background-image:  linear-gradient(to right, rgba(98, 207, 78, 0.6), rgba(12, 116, 47, 0.918));
+  background-size: 200% auto;
+  box-shadow: 0 0 20px rgba(0, 0, 0, .1);
+  transition: .5s;
+}
+button:hover,
+.button_whois:hover,
+.button_ping:hover{
+  background-position: right center;
+}

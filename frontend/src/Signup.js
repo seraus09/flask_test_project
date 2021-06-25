@@ -1,7 +1,7 @@
 import './App.css';
 
 
-export const Signup =()=>{
+const Signup =()=>{
     return(
         <h1>Signup</h1>
     )
