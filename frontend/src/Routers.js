@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import App from './App';
-import  Tools  from './Tools';
-import  Login  from './Login';
+import  Tools  from './pages/Tools';
+import  Login  from './pages/Login';
+import Signup from './pages/Signup';
 import { Route, Switch, BrowserRouter as Router,  } from 'react-router-dom'
-import Signup from './Signup';
+
 
 
 

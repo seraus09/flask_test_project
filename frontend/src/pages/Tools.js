@@ -1,5 +1,6 @@
-import './App.css';
-import Menu from './Menu.js';
+import '../App.css';
+import Menu from '../components/Menu.js';
+
 
 
 const Tools =()=>{

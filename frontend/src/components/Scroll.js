@@ -1,7 +1,7 @@
-import info from './static/img5.png';
-import ping from './static/img3.png';
-import whois from './static/img2.png'
-import './App.css';
+import info from '../static/img5.png';
+import ping from '../static/img3.png';
+import whois from '../static/img2.png'
+import '../App.css';
 import React, { useState } from 'react';
 
 

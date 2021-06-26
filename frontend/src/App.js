@@ -1,6 +1,6 @@
 import './App.css';
-import Menu from './Menu.js';
-import Scroll from './Scroll.js';
+import Menu from './components/Menu.js';
+import Scroll from './components/Scroll.js';
 
 
 
