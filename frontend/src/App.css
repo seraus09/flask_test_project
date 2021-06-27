@@ -208,3 +208,7 @@ button:hover,
 .button_ping:hover{
   background-position: right center;
 }
+
+.map{
+  margin-left: 1300px;
+}

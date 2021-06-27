@@ -1,5 +1,7 @@
 import '../App.css';
 import Menu from '../components/Menu.js';
+import MapBasic from '../components/MapBasic'; 
+
 
 
 
@@ -19,6 +21,9 @@ const Tools =()=>{
                   </div>
              </form>
         </div>
+           <div className="map"> 
+            <MapBasic/>
+            </div>   
         </body>
     )
 }
