@@ -13,10 +13,10 @@ L.Icon.Default.mergeOptions({
 
 
 const MapBasic =()=>{
-    const position = [51.505, -0.09]
+    const position = [50.2716, 30.3125]
     return(
       <div className="leaflet-container">
-      <MapContainer center={position} zoom={8} scrollWheelZoom={false}>
+      <MapContainer center={position} zoom={5} scrollWheelZoom={false}>
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
