@@ -209,6 +209,49 @@ button:hover,
   background-position: right center;
 }
 
+.tools_block{
+  margin-top: 100px;
+  margin-left: 700px;
+  display: flex;
+}
 .map{
-  margin-left: 1300px;
+  margin-top: -65px;
+  margin-left: 140px;
+  border-radius: 8px;
+}
+
+.table {
+	width: 450px;
+	border: 1px solid;
+	margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+.table thead th {
+	font-weight: bold;
+	text-align: center;
+	border: none;
+	padding: 10px 15px;
+	background: #d8d8d8;
+	font-size: 14px;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+}
+
+.table tbody td {
+	text-align: left;
+	border: none;
+	padding: 15px 20px;
+	font-size: 14px;
+	vertical-align: top;
+}
+.table tbody tr:nth-child(even){
+	background: #f3f3f3;
+}
+.table tbody tr td:first-child {
+	border-radius: 8px 0 0 8px;
+}
+.table tbody tr td:last-child {
+	border-radius: 0 8px 8px 0;
 }

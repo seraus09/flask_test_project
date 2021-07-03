@@ -1,9 +1,9 @@
 import '../App.css';
-
+import Loading from '../components/Loading';
 
 export const Login =()=>{
     return(
-        <h1>Login</h1>
+        <Loading/>
     )
 }
 

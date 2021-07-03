@@ -1,12 +1,10 @@
 Flask==0.10.1 
 Werkzeug==0.16.1
-Moment
-Flask-Bootstrap
 requests
-Flask-WTF
-flask-moment
 whois
 ipwhois
 redis
 loguru
 python-dotenv==0.17.0
+flask_restful
+flask-cors
