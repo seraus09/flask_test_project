@@ -214,6 +214,11 @@ button:hover,
   margin-left: 700px;
   display: flex;
 }
+
+.tools_load{
+  margin-top: 140px;
+  margin-left: 850px;
+  }
 .map{
   margin-top: -65px;
   margin-left: 140px;

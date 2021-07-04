@@ -16,8 +16,6 @@ L.Icon.Default.mergeOptions({
 
 const MapBasic =(props)=>{
     const [position,setPosition] = useState([props?.latitude.toFixed(4),props?.longitude.toFixed(4)])
-    console.log(props.latitude)
-    console.log(props.longitude)
     return(
       <div className="leaflet-container">
       <MapContainer center={position} zoom={5} scrollWheelZoom={false}>

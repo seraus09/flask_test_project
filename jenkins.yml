@@ -1,4 +1,0 @@
-site:
-    build: .
-    ports:
-        - "80:80"
