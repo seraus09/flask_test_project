@@ -2,3 +2,4 @@
 app/__pycache__/
 .vscode/
 login_test.py
+app/tests/__pycache__/
