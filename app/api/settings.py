@@ -1,8 +1,10 @@
 import redis
 
+
+
 REDIS_CONNECT = redis.Redis(host="10.10.0.2", 
-                                port=6379, 
-                                db=1)
+                                    port=6379, 
+                                    db=1)
 RECAPTCHA_USE_SSL= False
 RECAPTCHA_PUBLIC_KEY = '6LcQiuMZAAAAAP_3gu9YVfyfow8HDHAfrbf1g8Xb'
 RECAPTCHA_PRIVATE_KEY = '6LcQiuMZAAAAAODI0Mvm8xkWfxqQcqJreUSDArRC'

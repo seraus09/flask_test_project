@@ -1,8 +1,7 @@
-from flask import Flask
+from flask import  Blueprint
 from flask_restful import Resource, Api
 import requests
 from loguru import logger
-from flask_cors import CORS
 from ipwhois import IPWhois
 import json
 import whois
@@ -10,9 +9,10 @@ from urllib.parse import urlparse
 import re
 from settings import *
 
-app = Flask(__name__)
-api=Api(app)
-cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+
+api_bp = Blueprint('api_v1', __name__)
+api_v1 = Api(api_bp)
+
 
 class GetGeo(Resource):
     def get(self,host):
@@ -51,8 +51,7 @@ class WhoisInfo(Resource):
 
 
 
-api.add_resource(GetGeo, '/api/geo/<string:host>')
-api.add_resource(WhoisInfo, '/api/whois/<string:host>')
+api_v1.add_resource(GetGeo, '/api/geo/<string:host>')
+api_v1.add_resource(WhoisInfo, '/api/whois/<string:host>')
 
-if __name__ == '__main__':
-    app.run(debug=True)
+

@@ -26,7 +26,10 @@ const Tools =()=>{
        await instance.get(`/api/geo/${host}`).then((resp) => {
           const allInfo = resp.data;
           setGeo(allInfo);
-        }).then(()=> setLoading(false));
+        }).then(()=> setLoading(false))
+        .catch(error => {
+          console.log(error)
+      });
      }
 
     async function  getWhoisInfo(host){
