@@ -6,12 +6,15 @@ from ipwhois import IPWhois
 import json
 import whois
 from urllib.parse import urlparse
+from flask import current_app
 import re
-from settings import *
-
 
 api_bp = Blueprint('api_v1', __name__)
 api_v1 = Api(api_bp)
+
+API_KEY = current_app.config['API_KEY']
+
+
 
 
 class GetGeo(Resource):
@@ -22,6 +25,7 @@ class GetGeo(Resource):
                 return url.json()
         except Exception as error:
             logger.error(error)
+            return {'error': error}
 
 class WhoisInfo(Resource):
     def get(self,host):
