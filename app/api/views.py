@@ -1,3 +1,4 @@
+
 from flask import  Blueprint
 from flask_restful import Resource, Api
 import requests
@@ -12,10 +13,8 @@ import re
 api_bp = Blueprint('api_v1', __name__)
 api_v1 = Api(api_bp)
 
+
 API_KEY = current_app.config['API_KEY']
-
-
-
 
 class GetGeo(Resource):
     def get(self,host):
@@ -25,7 +24,6 @@ class GetGeo(Resource):
                 return url.json()
         except Exception as error:
             logger.error(error)
-            return {'error': error}
 
 class WhoisInfo(Resource):
     def get(self,host):
@@ -48,10 +46,6 @@ class WhoisInfo(Resource):
         except Exception as error:
             logger.error(error)
             return {'error':'Not information about this zone'}, 400
-
-
-
-
 
 
 
