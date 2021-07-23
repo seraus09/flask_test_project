@@ -1,4 +1,3 @@
-
 from flask import  Blueprint
 from flask_restful import Resource, Api
 import requests
@@ -10,20 +9,23 @@ from urllib.parse import urlparse
 from flask import current_app
 import re
 
+
+
 api_bp = Blueprint('api_v1', __name__)
 api_v1 = Api(api_bp)
 
 
-API_KEY = current_app.config['API_KEY']
 
 class GetGeo(Resource):
     def get(self,host):
+        API_KEY = current_app.config["API_KEY"]
         try:
             url = requests.get(f'http://api.ipstack.com/{host}?access_key={API_KEY}')
             if url.status_code == 200:
                 return url.json()
         except Exception as error:
             logger.error(error)
+            logger.debug(current_app.config["API_KEY"])
 
 class WhoisInfo(Resource):
     def get(self,host):
@@ -51,5 +53,6 @@ class WhoisInfo(Resource):
 
 api_v1.add_resource(GetGeo, '/api/geo/<string:host>')
 api_v1.add_resource(WhoisInfo, '/api/whois/<string:host>')
+
 
 
