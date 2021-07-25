@@ -22,10 +22,10 @@ class GetGeo(Resource):
         try:
             url = requests.get(f'http://api.ipstack.com/{host}?access_key={API_KEY}')
             if url.status_code == 200:
+                logger.debug(url.json())
                 return url.json()
         except Exception as error:
             logger.error(error)
-            logger.debug(current_app.config["API_KEY"])
 
 class WhoisInfo(Resource):
     def get(self,host):

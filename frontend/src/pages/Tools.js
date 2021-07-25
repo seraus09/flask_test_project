@@ -7,6 +7,8 @@ import {Url} from '../config/Config.js'
 import Loading from '../components/Loading';
 
 
+
+
 const instance = axios.create ({
   baseURL: Url,
   headers: {
@@ -20,6 +22,7 @@ const Tools =()=>{
     const [status,setStatus] = useState(false)
     const [loading,setLoading] = useState(false)
     const [whois,setWhois] = useState([])
+    const [isValid, setIsValid] = useState(false);
 
     async function  getApiRes(host){
        setLoading(true)
@@ -28,7 +31,8 @@ const Tools =()=>{
           setGeo(allInfo);
         }).then(()=> setLoading(false))
         .catch(error => {
-          console.log(error)
+          alert(error)
+
       });
      }
 
@@ -42,8 +46,14 @@ const Tools =()=>{
 
     const handleSubmit = (evt, host) => {
         evt.preventDefault();
-        getApiRes(host)
-        setStatus(true)
+        if (host.length < 4){
+          setIsValid(false)
+         }
+        else{
+          setIsValid(true)
+          getApiRes(host)
+          setStatus(true)
+        }
     }
     
     const handleSubmitInfo = (evt, host) => {
@@ -58,6 +68,10 @@ const Tools =()=>{
             <Menu/>
         </header>
         <div>
+            {isValid 
+               ? null
+               : <container>Er</container>
+            }
             <form >
                   <input className="input" onChange={e => setHost(e.target.value)}   value={host} type="text" placeholder="Enter IP or domain"/>
                   <div>
