@@ -23,6 +23,7 @@ const Tools =()=>{
     const [loading,setLoading] = useState(false)
     const [whois,setWhois] = useState([])
     const [isValid, setIsValid] = useState(false);
+    const [inputError, setInputError] = useState('')
 
     async function  getApiRes(host){
        setLoading(true)
@@ -43,17 +44,18 @@ const Tools =()=>{
          setWhois(info);
        }).then(()=> setLoading(false));
     }
-
+    console.log(host)
+    console.log(host.length)
     const handleSubmit = (evt, host) => {
         evt.preventDefault();
-        if (host.length < 4){
-          setIsValid(false)
-         }
+        if(host.length < 4){
+          setIsValid(true) || setInputError('Please type correct IP-address or domain')
+          } 
         else{
-          setIsValid(true)
-          getApiRes(host)
-          setStatus(true)
-        }
+            setIsValid(false)
+            getApiRes(host)
+            setStatus(true)
+          }
     }
     
     const handleSubmitInfo = (evt, host) => {
@@ -61,6 +63,7 @@ const Tools =()=>{
         getWhoisInfo(host)
         
   }
+ 
    
     return(
         <body>
@@ -68,12 +71,9 @@ const Tools =()=>{
             <Menu/>
         </header>
         <div>
-            {isValid 
-               ? null
-               : <container>Er</container>
-            }
             <form >
-                  <input className="input" onChange={e => setHost(e.target.value)}   value={host} type="text" placeholder="Enter IP or domain"/>
+                   {(isValid && inputError) && <div className="error_msg">{inputError}</div>}
+                  <input className="input" onChange={e => setHost(e.target.value)}   value={host} type="text" name="field" placeholder="Enter IP or domain"/>
                   <div>
                      <button type="submit" onClick={(evt) => handleSubmit(evt,host)} >Info</button>
                      <button className="button_ping" type="submit">Ping</button>
