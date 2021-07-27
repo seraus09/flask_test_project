@@ -48,11 +48,17 @@ const Tools =()=>{
     console.log(host.length)
     const handleSubmit = (evt, host) => {
         evt.preventDefault();
-        if(host.length < 4){
+        const re = /^(?:(?:(?:[a-zA-z\-]+)\:\/{1,3})?(?:[a-zA-Z0-9])(?:[a-zA-Z0-9\-\.]){1,61}(?:\.[a-zA-Z]{2,})+|\[(?:(?:(?:[a-fA-F0-9]){1,4})(?::(?:[a-fA-F0-9]){1,4}){7}|::1|::)\]|(?:(?:[0-9]{1,3})(?:\.[0-9]{1,3}){3}))(?:\:[0-9]{1,5})?$/
+        if (!re.test(String(host).toLowerCase())){
           setIsValid(true) || setInputError('Please type correct IP-address or domain')
-          } 
+          setTimeout(() => {setInputError("")}, 5000)
+          if(host.length < 4){
+            setIsValid(true) || setInputError('Please type correct IP-address or domain')
+            setTimeout(() => {setInputError("")}, 5000)
+          }
+        }
+         
         else{
-            setIsValid(false)
             getApiRes(host)
             setStatus(true)
           }
@@ -84,7 +90,6 @@ const Tools =()=>{
         </div>
           {loading ? <div className="tools_load"><Loading/></div>: status ?
            <div className="tools_block">
-                 
               <table className="table">
                 <tbody>    
                   <tr>
