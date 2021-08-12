@@ -1,20 +1,18 @@
 version: "3.8"
 services:
-  site:
+  backend:
     build: .
     ports:
       - "80:80"
-    networks:
-      vpcbr:
-        ipv4_address: 10.10.0.3
+    volumes:
+      - ./:/var/www/backend
+    depends_on:
+      - redis 
 
   redis:
     image: "redis:alpine"
     ports:
       - "6379:6379"
-    networks:
-      vpcbr:
-        ipv4_address: 10.10.0.2
 
 networks:
   vpcbr:

@@ -15,8 +15,9 @@ import re
 api_bp = Blueprint('api_v1', __name__)
 api_v1 = Api(api_bp)
 
+
 class CleanHost():
-    """Class for getting different result"""
+    """Class get string and clean it"""
     def __init__(self, host):
         self.host = host
 
