@@ -1,8 +1,11 @@
 name: Remote SSH Deployment
 on:
-   push:
-     branches:
-       - master
+   workflow_dispatch:
+      inputs:
+         name:
+           description: 'Person to greet'
+           required: true
+           default: 'Mona the Octocat'
 
 jobs:
   linter:
