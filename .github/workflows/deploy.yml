@@ -82,5 +82,5 @@ jobs:
           known_hosts: ansible/.ansible_known_hosts
           vault_password: ${{secrets.VAULT_PASSWORD}}
           options: |
-            --ssh-common-args=-o UserKnownHostsFile=ansible/.ansible_known_hosts
+            --ssh-common-args= -o UserKnownHostsFile=ansible/.ansible_known_hosts
 
