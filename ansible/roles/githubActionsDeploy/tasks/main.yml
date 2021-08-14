@@ -15,3 +15,7 @@
   shell:
     chdir: "/var/"
     cmd: docker-compose -f docker-compose.prod.yml build
+- name: "Up docker container"
+  shell:
+    chdir: "/var/"
+    cmd: docker-compose -f docker-compose.prod.yml up -d
