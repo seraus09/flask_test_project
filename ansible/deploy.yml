@@ -1,5 +1,5 @@
 - name: Deploy test
-  hosts: test
+  hosts: vagrant
   become: True
   tasks:
     - name: Test
