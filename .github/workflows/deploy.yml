@@ -65,11 +65,11 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v1
-      - name: check
-        run: |
-          ls -al /home/runner/runners
+        
       - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v2
+        env:
+            ANSIBLE_HOST_KEY_CHECKING: False
         with:
           playbook: deploy.yml
           directory: ansible/
@@ -77,6 +77,6 @@ jobs:
           inventory: |
             [test]
             91.201.25.57
-          known_hosts: ansible/.ansible_known_hosts
+          known_hosts: .known_hosts
           vault_password: ${{secrets.VAULT_PASSWORD}}
 
