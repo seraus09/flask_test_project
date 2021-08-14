@@ -65,10 +65,7 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v1
-      
-      - name: Run ansible playbook
-        run: |
-          ssh-keygen -R vm837693.had.su
+        
       - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
