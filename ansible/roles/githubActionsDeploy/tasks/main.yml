@@ -1,5 +1,4 @@
 ---
-
 - name: "Copy docker-compose to server"
   ansible.builtin.copy:
     src: /home/runner/work/site/site/docker-compose.prod.yml
