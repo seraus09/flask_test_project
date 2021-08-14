@@ -4,63 +4,63 @@ on:
      branches: [master]
 
 jobs:
-  #linter:
-  #  name: Lint Code Base
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #  - name: Checkout Code
-  #    uses: actions/checkout@v2
-  #    with:
-  #        fetch-depth: 0
+  linter:
+    name: Lint Code Base
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+      with:
+          fetch-depth: 0
 
-  #  - name: Set up Python
-  #    uses: actions/setup-python@v2
-  #    with:
-  #      python-version: '3.x'  
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'  
      
-  #  - name: Create & Activate VENV
-  #    run: |
-  #      python3 -m venv venv
-  #      source venv/bin/activate
-  #  - name: Install dependencies
-  #    run: |
-  #      python3 -m pip install --upgrade pip
-  #      pip3 install wheel
-  #      pip3 install -r app/requirements.txt
-  #  - name: Lint Code Base
-  #    uses: docker://github/super-linter:latest
-  #    env:
-  #      FILTER_REGEX_EXCLUDE: .*(static|scss|venv|locale)/.*
-  #      DEFAULT_BRANCH: master
-  #      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #      VALIDATE_ALL_CODEBASE: false
-  #      VALIDATE_PYTHON: true
-  #      VALIDATE_PYTHON_FLAKE8: true
-  #      VALIDATE_PYTHON_PYLINT: true
-  #      VALIDATE_PYTHON_MYPY: true
-  #      VALIDATE_PYTHON_ISORT: true
-  #build:
-  #  name: Build and test 
-  #  needs: [linter]
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #    - name: Checkout Code
-  #      uses: actions/checkout@v1
-  #    - name: Build images
-  #      run: |
-  #        docker-compose build
-  #        docker-compose run backend python3 test.py
+    - name: Create & Activate VENV
+      run: |
+        python3 -m venv venv
+        source venv/bin/activate
+    - name: Install dependencies
+      run: |
+        python3 -m pip install --upgrade pip
+        pip3 install wheel
+        pip3 install -r app/requirements.txt
+    - name: Lint Code Base
+      uses: docker://github/super-linter:latest
+      env:
+        FILTER_REGEX_EXCLUDE: .*(static|scss|venv|locale)/.*
+        DEFAULT_BRANCH: master
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        VALIDATE_ALL_CODEBASE: false
+        VALIDATE_PYTHON: true
+        VALIDATE_PYTHON_FLAKE8: true
+        VALIDATE_PYTHON_PYLINT: true
+        VALIDATE_PYTHON_MYPY: true
+        VALIDATE_PYTHON_ISORT: true
+  build:
+    name: Build and test 
+    needs: [linter]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v1
+      - name: Build images
+        run: |
+          docker-compose build
+          docker-compose run backend python3 test.py
       
-  #    - name: Login to docker hub
-  #      env:
-  #        DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
-  #        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-  #      run: |
-  #        docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-  #        docker-compose push backend
+      - name: Login to docker hub
+        env:
+          DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
+          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+        run: |
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+          docker-compose push backend
   deploy:
     name: Deploy image to server
-    #needs: [build]
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
