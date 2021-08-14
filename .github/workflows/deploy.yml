@@ -73,10 +73,9 @@ jobs:
           inventory: ansible/hosts.ini
           user: root
           private_key: ${{secrets.SSH_PRIVATE_KEY}}
+          vault_password: ${{secrets.VAULT_PASSWORD}}
         env:
           ANSIBLE_HOST_KEY_CHECKING: 'false'
           ANSIBLE_DEPRECATION_WARNINGS: 'false'
-      - name: test
-        run: |
-         pwd && ls
+
 
