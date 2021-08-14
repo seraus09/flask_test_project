@@ -1,7 +1,7 @@
 ---
 - name: "Copy docker-compose to server"
   ansible.builtin.copy:
-    src: /home/runner/work/site/site/docker-compose.prod.yml
+    src: ../docker-compose.prod.yml
     dest: "/var/"
 
 - name: "Log in to docker-hub"
