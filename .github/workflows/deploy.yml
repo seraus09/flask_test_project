@@ -71,6 +71,7 @@ jobs:
         with:
           playbook: ansible/deploy.yml
           inventory: ansible/hosts.ini
+          private_key: ${{secrets.SSH_PRIVATE_KEY}}
         env:
           ANSIBLE_HOST_KEY_CHECKING: 'false'
           ANSIBLE_DEPRECATION_WARNINGS: 'false'
