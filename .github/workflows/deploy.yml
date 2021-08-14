@@ -81,4 +81,7 @@ jobs:
             91.201.25.57
           known_hosts: ansible/.ansible_known_hosts
           vault_password: ${{secrets.VAULT_PASSWORD}}
+          options: |
+            --extra-vars hello=there
+            --verbose
 
