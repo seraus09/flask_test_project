@@ -1,0 +1,7 @@
+- name: Deploy test
+  hosts: test
+  become: True
+  tasks:
+    - name: Test
+      debug:
+        msg: "Hello world"

@@ -62,5 +62,23 @@ jobs:
         run: |
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
           docker-compose push backend
+  deploy:
+    name: Deploy image to server
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v1
 
+      - name: Run playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: deploy.yml
+          directory: ansible/
+          key: ${{secrets.SSH_PRIVATE_KEY}}
+          inventory: |
+            [test]
+            91.201.25.57
+          known_hosts: .known_hosts
+          vault_password: ${{secrets.VAULT_PASSWORD}}
 

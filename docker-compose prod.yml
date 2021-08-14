@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  backend:
+    image: docker.io/seraua09/test
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www/backend
+    depends_on:
+      - redis 
+
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+
