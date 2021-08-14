@@ -2,14 +2,16 @@
 - name: "Copy docker-compose to server"
   ansible.builtin.copy:
     src: /home/runner/work/site/site/docker-compose.prod.yml
-    dest: "/var/www/{{ project }}"
+    dest: "/var/"
 
 - name: "Log in to docker-hub"
   shell:
     cmd: "docker login -u {{ docker_user }} -p {{ docker_password }}"
 - name: Update application image
   shell:
-    cmd: "docker-compose pull {{ project }}"
+    chdir: "/var/"
+    cmd: "docker-compose -f docker-compose.prod.yml pull {{ project }}"
 - name: "Rebuild docker-compose"
   shell:
-    cmd: docker-compose -f docker-compose.prod.yml
+    chdir: "/var/"
+    cmd: docker-compose -f docker-compose.prod.yml build
