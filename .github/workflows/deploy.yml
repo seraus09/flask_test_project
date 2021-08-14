@@ -68,7 +68,7 @@ jobs:
       
       - name: Run ansible playbook
         run: |
-          ls -al
+          ssh-keygen -R vm837693.had.su
       - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v2
         with:
