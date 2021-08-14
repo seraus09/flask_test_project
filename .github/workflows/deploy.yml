@@ -1,11 +1,7 @@
 name: Remote SSH Deployment
 on:
-   workflow_dispatch:
-      inputs:
-         name:
-           description: 'CI/CD conf'
-           required: true
-           default: 'update CI/CD'
+   push:
+     branches: [master]
 
 jobs:
   linter:
