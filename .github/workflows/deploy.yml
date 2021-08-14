@@ -71,6 +71,7 @@ jobs:
         with:
           playbook: ansible/deploy.yml
           inventory: ansible/hosts.ini
+          user: root
           private_key: ${{secrets.SSH_PRIVATE_KEY}}
         env:
           ANSIBLE_HOST_KEY_CHECKING: 'false'
