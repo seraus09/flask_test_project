@@ -69,7 +69,7 @@ jobs:
       - name: Run playbook
         uses: arillso/action.playbook@master
         with:
-          playbook: ansible/playbook.yml
+          playbook: ansible/deploy.yml
           inventory: ansible/hosts.yml
         env:
           ANSIBLE_HOST_KEY_CHECKING: 'false'
