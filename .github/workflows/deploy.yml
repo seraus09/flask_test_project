@@ -1,7 +1,11 @@
 name: Remote SSH Deployment
 on:
-   push:
-      branches: [master]
+   workflow_dispatch:
+      inputs:
+         name:
+           description: 'CI/CD conf'
+           required: true
+           default: 'update CI/CD'
 
 jobs:
   linter:
@@ -65,15 +69,13 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v1
-
-      - name: Enable ansible action
-        uses: dawidd6/action-ansible-playbook@v2
       
       - name: Run ansible playbook
         run: |
           ssh-keygen -F 91.201.25.57 >> /dev/null 2>&1 || ssh-keyscan 91.201.25.57 >> ~/.ssh/known_hosts
-        env:
-            ANSIBLE_HOST_KEY_CHECKING: 'false'
+
+      - name: Run playbook
+        uses: dawidd6/action-ansible-playbook@v2
         with:
           playbook: deploy.yml
           directory: ansible/
