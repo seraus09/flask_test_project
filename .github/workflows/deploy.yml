@@ -65,18 +65,13 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v1
-      - name: check
-        run: |
-          ls -al /home
+        
       - name: Run playbook
-        uses: dawidd6/action-ansible-playbook@v2
+        uses: arillso/action.playbook@master
         with:
-          playbook: deploy.yml
-          directory: ansible/
-          key: ${{secrets.SSH_PRIVATE_KEY}}
-          inventory: |
-            [test]
-            91.201.25.57
-          known_hosts: ansible/.ansible_known_hosts
-          vault_password: ${{secrets.VAULT_PASSWORD}}
+          playbook: ansible/playbook.yml
+          inventory: ansible/hosts.yml
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: 'false'
+          ANSIBLE_DEPRECATION_WARNINGS: 'false'
 
