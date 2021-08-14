@@ -68,7 +68,7 @@ jobs:
         
       - name: test
         run: |
-         pwd && ls -al
+         cat /home/runner/work/site/site/docker-compose.prod.yml
         
       - name: Run playbook
         uses: arillso/action.playbook@master
