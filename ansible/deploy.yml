@@ -1,5 +1,5 @@
 - name: Deploy test
-  hosts: test
+  hosts: 91.201.25.57
   become: True
   tasks:
     - name: Test
