@@ -78,5 +78,5 @@ jobs:
           ANSIBLE_DEPRECATION_WARNINGS: 'false'
       - name: test
         run: |
-         pwd 
+         pwd && ls
 
