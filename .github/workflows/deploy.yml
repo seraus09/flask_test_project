@@ -79,6 +79,6 @@ jobs:
           inventory: |
             [test]
             91.201.25.57
-          known_hosts: .ansible_known_hosts
+          known_hosts: ansible/.ansible_known_hosts
           vault_password: ${{secrets.VAULT_PASSWORD}}
 
