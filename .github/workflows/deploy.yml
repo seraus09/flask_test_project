@@ -72,7 +72,7 @@ jobs:
       
       - name: Run ansible playbook
         run: |
-          ssh-keygen -F 91.201.25.57 >> /dev/null 2>&1 || ssh-keyscan 91.201.25.57 >> .known_hosts
+          ssh-keygen -F 91.201.25.57 >> /dev/null 2>&1 || ssh-keyscan 91.201.25.57 >> .ansible_known_hosts
 
       - name: Run playbook
         uses: dawidd6/action-ansible-playbook@v2
@@ -83,6 +83,6 @@ jobs:
           inventory: |
             [test]
             91.201.25.57
-          known_hosts: .known_hosts
+          known_hosts: .ansible_known_hosts
           vault_password: ${{secrets.VAULT_PASSWORD}}
 
