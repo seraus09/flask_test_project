@@ -70,7 +70,7 @@ jobs:
         uses: arillso/action.playbook@master
         with:
           playbook: ansible/deploy.yml
-          inventory: ansible/host.ini
+          inventory: ansible/hosts.yml
         env:
           ANSIBLE_HOST_KEY_CHECKING: 'false'
           ANSIBLE_DEPRECATION_WARNINGS: 'false'
