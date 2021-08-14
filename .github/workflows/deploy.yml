@@ -76,4 +76,7 @@ jobs:
         env:
           ANSIBLE_HOST_KEY_CHECKING: 'false'
           ANSIBLE_DEPRECATION_WARNINGS: 'false'
+      - name: test
+        run: |
+         pwd 
 
