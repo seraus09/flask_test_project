@@ -43,6 +43,8 @@ jobs:
     name: Build and test 
     needs: [linter]
     runs-on: ubuntu-latest
+    env:
+      TAG:  ${{ github.ref }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v1
@@ -62,8 +64,6 @@ jobs:
     name: Deploy image to server
     needs: [build]
     runs-on: ubuntu-latest
-    env:
-      TAG:  ${{ github.ref }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v1
