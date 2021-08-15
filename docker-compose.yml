@@ -2,7 +2,7 @@ version: "3.8"
 services:
   backend:
     build: .
-    image: docker.io/seraua09/test:${TAG_NAME}
+    image: docker.io/seraua09/test
     ports:
       - "80:80"
     volumes:
