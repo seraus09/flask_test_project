@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import  axios from 'axios';
 import {Url} from '../config/Config.js'
 import Loading from '../components/Loading';
+import IpWhois from '../components/IpWhoIs';
 
 
 
@@ -21,9 +22,10 @@ const Tools =()=>{
     const [geo,setGeo] = useState([])
     const [status,setStatus] = useState(false)
     const [loading,setLoading] = useState(false)
-    const [whois,setWhois] = useState([])
+    const [whois,setWhois] = useState(false)
     const [isValid, setIsValid] = useState(false);
     const [inputError, setInputError] = useState('')
+    const [WhoisIPdata, setWhoisIPdata] = useState([])
 
     async function  getApiRes(host){
        setLoading(true)
@@ -37,15 +39,7 @@ const Tools =()=>{
       });
      }
 
-    async function  getWhoisInfo(host){
-      setLoading(true)
-      await instance.get(`/api/whois/${host}`).then((resp) => {
-         const info = resp.data;
-         setWhois(info);
-       }).then(()=> setLoading(false));
-    }
-    console.log(host)
-    console.log(host.length)
+   
     const handleSubmit = (evt, host) => {
         evt.preventDefault();
         const re = /^(?:(?:(?:[a-zA-z\-]+)\:\/{1,3})?(?:[a-zA-Z0-9])(?:[a-zA-Z0-9\-\.]){1,61}(?:\.[a-zA-Z]{2,})+|\[(?:(?:(?:[a-fA-F0-9]){1,4})(?::(?:[a-fA-F0-9]){1,4}){7}|::1|::)\]|(?:(?:[0-9]{1,3})(?:\.[0-9]{1,3}){3}))(?:\:[0-9]{1,5})?$/
@@ -64,11 +58,24 @@ const Tools =()=>{
           }
     }
     
-    const handleSubmitInfo = (evt, host) => {
+    const handleSubmitInfo = (evt,host) => {
         evt.preventDefault();
-        getWhoisInfo(host)
-        
-  }
+        const re_ip = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
+        const re_domain = /\b((?=[a-z0-9-]{1,63}\.)(xn--)?[a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,63}\b/
+
+        if (re_ip.test(String(host).toLowerCase())){
+          setWhoisIPdata(<IpWhois host={host}/>)
+          setWhois(true)
+          setStatus(false)
+          } else if (re_domain.test(String(host).toLowerCase())){
+              setIsValid(true) || setInputError('Working')
+              setTimeout(() => {setInputError("")}, 5000)
+            }
+        else{
+            setIsValid(true) || setInputError('Please type correct IP-address or domain')
+            setTimeout(() => {setInputError("")}, 5000)
+        }
+      }
  
    
     return(
@@ -135,8 +142,7 @@ const Tools =()=>{
                <div className="map">
                 <MapBasic latitude={geo.latitude} longitude={geo.longitude}/>
                </div>    
-            </div> : null}
-            <pre>{JSON.stringify(whois,null,2)}</pre>
+            </div> : whois ? WhoisIPdata : null}
         </body>
     )
 }

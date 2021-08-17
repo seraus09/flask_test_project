@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 
 
 
-const Scroll =()=>{
+const Main =()=>{
     const [isShownPing, setIsShownPing] = useState(false);
     const [isShownWhois, setIsShownWhois] = useState(false);
     return(
@@ -45,6 +45,6 @@ const Scroll =()=>{
     )
 }
 
-export default Scroll;
+export default Main;
 
 

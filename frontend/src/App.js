@@ -1,6 +1,6 @@
 import './App.css';
 import Menu from './components/Menu.js';
-import Scroll from './components/Scroll.js';
+import Main from './pages/Main.js';
 
 
 
@@ -29,7 +29,7 @@ function App() {
         Features Overview
       </p>
     </div>
-     <Scroll/>
+     <Main/>
      <hr></hr>
      
     </body>
