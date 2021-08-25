@@ -6,6 +6,7 @@ import  axios from 'axios';
 import {Url} from '../config/Config.js'
 import Loading from '../components/Loading';
 import IpWhois from '../components/IpWhoIs';
+import DomainWhois from '../components/DomainWhois'
 
 
 
@@ -26,6 +27,7 @@ const Tools =()=>{
     const [isValid, setIsValid] = useState(false);
     const [inputError, setInputError] = useState('')
     const [WhoisIPdata, setWhoisIPdata] = useState([])
+    const [WhoisDomainData, setWhoisDomainData] = useState([])
 
     async function  getApiRes(host){
        setLoading(true)
@@ -68,8 +70,10 @@ const Tools =()=>{
           setWhois(true)
           setStatus(false)
           } else if (re_domain.test(String(host).toLowerCase())){
-              setIsValid(true) || setInputError('Working')
-              setTimeout(() => {setInputError("")}, 5000)
+              setWhoisDomainData(<DomainWhois host={host}/>)
+              setWhois(true)
+              setStatus(false)
+              
             }
         else{
             setIsValid(true) || setInputError('Please type correct IP-address or domain')
@@ -142,7 +146,7 @@ const Tools =()=>{
                <div className="map">
                 <MapBasic latitude={geo.latitude} longitude={geo.longitude}/>
                </div>    
-            </div> : whois ? WhoisIPdata : null}
+            </div> : whois ? WhoisDomainData : null}
         </body>
     )
 }
