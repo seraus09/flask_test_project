@@ -9,3 +9,4 @@ redis==3.5.3
 requests==2.26.0
 python-whois==0.7.3
 Flask-Testing==0.8.1
+sentry-sdk[flask]

@@ -70,6 +70,8 @@ class WhoisInfo(Resource):
 
 
 
+
+
 api_v1.add_resource(GetGeo, '/api/geo/<string:host>')
 api_v1.add_resource(WhoisInfo, '/api/whois/<string:host>')
 
