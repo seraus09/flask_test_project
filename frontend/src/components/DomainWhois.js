@@ -15,14 +15,13 @@ const DomainWhois = (props) => {
     const [whois,setWhois] = useState([])
     
     useEffect(() => {
-        
         instance.get(`/api/whois/${props.host}`).then((resp) => {
            const info = resp.data;
            setWhois(info);
          }).catch(error => {
           alert(error) 
           })
-        },[]);
+        },[props.host]);
       
     
 

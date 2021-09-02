@@ -17,7 +17,7 @@ api_v1 = Api(api_bp)
 
 
 class CleanHost():
-    """Class get string and clean it"""
+    
     def __init__(self, host):
         self.host = host
 
@@ -25,7 +25,7 @@ class CleanHost():
         url = self.host
         if re.match('http:|https:|ftp:', str(url)):
             hostname = socket.getaddrinfo(urlparse(url).hostname, 443, proto=socket.IPPROTO_TCP)
-            ip_candidates = re.findall(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b", str(hostname))
+            ip_candidates = re.findall(r'\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b', str(hostname))
             clean_string = str(ip_candidates)[0:17].rstrip(']').rstrip("'").lstrip("[").lstrip("'").lstrip("b").rstrip(",").rstrip("'")
             return str(clean_string.encode('idna')).lstrip('b').lstrip("'").rstrip("'")
         else:
@@ -52,15 +52,14 @@ class WhoisInfo(Resource):
         try:
             if re.match('http:|https:', host):
                 if re.match(r'\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b', str(hostname)):
-                    return IPWhois(hostname).lookup_whois(), 200
+                    return IPWhois(hostname).lookup_whois()['nets'][0], 200
                 else:
                     return json.dumps(whois.query(hostname).__dict__),200
             elif hostname is None:
                 if re.match(r'\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b', str(host)):
-                    return IPWhois(host).lookup_whois(), 200
+                    return IPWhois(host).lookup_whois()['nets'][0], 200
                 else:
-                    result = whois.query(host).__dict__
-                    return json.dumps(str(result)),200
+                    return json.dumps(str(whois.query(host).__dict__)),200
 
             else:
                 return {'error':'Not information about this zone'}, 400

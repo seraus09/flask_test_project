@@ -23,7 +23,8 @@ const Tools =()=>{
     const [geo,setGeo] = useState([])
     const [status,setStatus] = useState(false)
     const [loading,setLoading] = useState(false)
-    const [whois,setWhois] = useState(false)
+    const [ipWhois,setIpWhois] = useState(false)
+    const [domWhois,setDomWhois] = useState(false)
     const [isValid, setIsValid] = useState(false);
     const [inputError, setInputError] = useState('')
     const [WhoisIPdata, setWhoisIPdata] = useState([])
@@ -46,10 +47,10 @@ const Tools =()=>{
         evt.preventDefault();
         const re = /^(?:(?:(?:[a-zA-z\-]+)\:\/{1,3})?(?:[a-zA-Z0-9])(?:[a-zA-Z0-9\-\.]){1,61}(?:\.[a-zA-Z]{2,})+|\[(?:(?:(?:[a-fA-F0-9]){1,4})(?::(?:[a-fA-F0-9]){1,4}){7}|::1|::)\]|(?:(?:[0-9]{1,3})(?:\.[0-9]{1,3}){3}))(?:\:[0-9]{1,5})?$/
         if (!re.test(String(host).toLowerCase())){
-          setIsValid(true) || setInputError('Please type correct IP-address or domain')
+          setIsValid(true) || setInputError("Please type correct IP-address or domain")
           setTimeout(() => {setInputError("")}, 5000)
           if(host.length < 4){
-            setIsValid(true) || setInputError('Please type correct IP-address or domain')
+            setIsValid(true) || setInputError("Please type correct IP-address or domain")
             setTimeout(() => {setInputError("")}, 5000)
           }
         }
@@ -67,16 +68,18 @@ const Tools =()=>{
 
         if (re_ip.test(String(host).toLowerCase())){
           setWhoisIPdata(<IpWhois host={host}/>)
-          setWhois(true)
+          setIpWhois(true)
           setStatus(false)
+          setDomWhois(false)
           } else if (re_domain.test(String(host).toLowerCase())){
               setWhoisDomainData(<DomainWhois host={host}/>)
-              setWhois(true)
+              setDomWhois(true)
               setStatus(false)
+              setIpWhois(false)
               
             }
         else{
-            setIsValid(true) || setInputError('Please type correct IP-address or domain')
+            setIsValid(true) || setInputError("Please type correct IP-address or domain")
             setTimeout(() => {setInputError("")}, 5000)
         }
       }
@@ -146,7 +149,7 @@ const Tools =()=>{
                <div className="map">
                 <MapBasic latitude={geo.latitude} longitude={geo.longitude}/>
                </div>    
-            </div> : whois ? WhoisDomainData : null}
+            </div> : domWhois ? WhoisDomainData  : !domWhois && ipWhois ? WhoisIPdata: null }
         </body>
     )
 }
