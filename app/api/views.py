@@ -1,4 +1,6 @@
+from os import name
 import socket
+from typing import DefaultDict
 from flask import  Blueprint
 from flask_restful import Resource, Api
 import requests
@@ -54,12 +56,19 @@ class WhoisInfo(Resource):
                 if re.match(r'\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b', str(hostname)):
                     return IPWhois(hostname).lookup_whois()['nets'][0], 200
                 else:
-                    return json.dumps(whois.query(hostname).__dict__),200
+                    return whois.query(hostname).__dict__,200
             elif hostname is None:
                 if re.match(r'\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b', str(host)):
                     return IPWhois(host).lookup_whois()['nets'][0], 200
                 else:
-                    return json.dumps(str(whois.query(host).__dict__)),200
+                    whois_data = dict()
+                    time_data = dict()
+                    for x,y in whois.query(host).__dict__.items():                    
+                        if x == 'creation_date' or x == 'expiration_date' or x == 'last_updated' or x == 'name_servers':
+                            time_data[x]=str(y)
+                        else:
+                            whois_data[x]=y
+                    return {'main_data': whois_data, 'data': time_data} ,200
 
             else:
                 return {'error':'Not information about this zone'}, 400
