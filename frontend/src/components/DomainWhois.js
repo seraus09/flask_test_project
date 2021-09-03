@@ -30,8 +30,6 @@ const DomainWhois = (props) => {
   useEffect(() => {
       getApiRes(props.host)
       },[props.host]);
-      
-      console.log(typeof(whois))
  
       return(
         
@@ -53,15 +51,15 @@ const DomainWhois = (props) => {
             </tr>
             <tr>
               <td>Creation date:</td>
-              <td>{whois.time_data.creation_date}</td>
+              <td>{whois.data.creation_date}</td>
             </tr>
             <tr>
               <td>Expiration date:</td>
-              <td>{whois.time_data.expiration_date}</td>
+              <td>{whois.data.expiration_date}</td>
             </tr>
             <tr>
               <td>Last update:</td>
-              <td>{whois.time_data.last_updated}</td>
+              <td>{whois.data.last_updated}</td>
             </tr>
               <tr>
                <td>Status:</td>
@@ -72,19 +70,14 @@ const DomainWhois = (props) => {
               <td>{whois.main_data.statuses}</td>
             </tr>
             <tr>
-              <td>DNSsec:</td>
-              <td>{whois.main_data.dnssec}</td>
-            </tr>
-            <tr>
               <td>Name servers:</td>
-              <td>{whois.time_data.name_servers}</td>
+              <td>{whois.data.name_servers}</td>
             </tr>
 
             </tbody>
           </table>
         
         </div>
-        
       )
     }
 

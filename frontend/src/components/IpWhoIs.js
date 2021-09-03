@@ -36,7 +36,7 @@ const IpWhois = (props) => {
       return(
         loading ? <div className="tools_load"><Loading/></div>:
         <div className="tools_block">
-        <table className="table">
+          <table className="table">
           <tbody>    
             <tr>
               <td>CIDR:</td>
