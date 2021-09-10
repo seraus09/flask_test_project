@@ -58,7 +58,7 @@ class WhoisInfo(Resource):
                 else:
                     whois_data = dict()
                     time_data = dict()
-                    for key_, value_ in whois.query(host).__dict__.items():            
+                    for key_, value_ in whois.query(host).__dict__.items():
                         if key_ == "creation_date" or key_ == "expiration_date" or key_ == "last_updated" or key_ == "name_servers":
                             time_data[key_] = str(value_)
                         else:
