@@ -3,6 +3,7 @@ import unittest
 from __init__ import create_app
 from flask_testing import TestCase
 
+
 class BaseTestCase(TestCase):
     def create_app(self):
         app = create_app()
@@ -20,7 +21,7 @@ class ApiTest(BaseTestCase):
         response = self.client.get('/api/whois/google.com')
         self.assertEqual(response.status_code, 200)
 
-    def  test_whois_fail(self):
+    def test_whois_fail(self):
         response = self.client.get('/api/whois/ttt.cf')
         self.assertEqual(response.status_code, 400)
 
