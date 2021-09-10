@@ -15,7 +15,6 @@ api_v1 = Api(api_bp)
 
 
 class CleanHost():
-    
     def __init__(self, host):
         self.host = host
 
