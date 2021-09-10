@@ -20,6 +20,10 @@ class ApiTest(BaseTestCase):
     def test_whois_endpoint(self):
         response = self.client.get('/api/whois/google.com')
         self.assertEqual(response.status_code, 200)
+    
+    def test_api_with_shema(self):
+        response = self.client.get('/api/whois/https://google.com')
+        self.assertEqual(response.status_code, 200)
 
     def test_whois_fail(self):
         response = self.client.get('/api/whois/ttt.cf')
