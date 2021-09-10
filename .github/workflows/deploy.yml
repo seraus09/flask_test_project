@@ -46,6 +46,7 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v1
+      
       - name: Build images
         run: |
           docker-compose build
@@ -65,11 +66,7 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v1
-        
-      - name: test
-        run: |
-         cat /home/runner/work/site/site/docker-compose.prod.yml
-        
+                
       - name: Run playbook
         uses: arillso/action.playbook@master
         with:
