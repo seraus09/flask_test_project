@@ -1,6 +1,6 @@
 import socket
-from flask import  Blueprint
-from flask_restful import Resource,Api
+from flask import Blueprint
+from flask_restful import Resource, Api
 import requests
 from loguru import logger
 from ipwhois import IPWhois
@@ -32,9 +32,9 @@ class CleanHost():
 
 
 class GetGeo(Resource):
-    def get(self,host):
+    def get(self, host):
         API_KEY = current_app.config["API_KEY"]
-        ip =  CleanHost(host).get_clean_hostname()
+        ip = CleanHost(host).get_clean_hostname()
         try:
             url = requests.get(f"http://api.ipstack.com/{ip}?access_key={API_KEY}")
             if url.status_code == 200:
@@ -45,7 +45,7 @@ class GetGeo(Resource):
 
 
 class WhoisInfo(Resource):
-    def get(self,host):
+    def get(self, host):
         hostname = urlparse(host).hostname
         try:
             if re.match("http:|https:", host):
@@ -59,22 +59,19 @@ class WhoisInfo(Resource):
                 else:
                     whois_data = dict()
                     time_data = dict()
-                    for x,y in whois.query(host).__dict__.items():                    
-                        if x == "creation_date" or x == "expiration_date" or x == "last_updated" or x == "name_servers":
-                            time_data[x]=str(y)
+                    for key_, value_ in whois.query(host).__dict__.items():            
+                        if key_ == "creation_date" or key_ == "expiration_date" or key_ == "last_updated" or key_ == "name_servers":
+                            time_data[key_] = str(value_)
                         else:
-                            whois_data[x]=y
+                            whois_data[key_] = value_
                     return {"main_data": whois_data, "data": time_data}, 200
 
             else:
-                return {"error":"Not information about this zone"}, 400
+                return {"error": "Not information about this zone"}, 400
         except Exception as error:
             logger.error(error)
-            return {"error":"Not information about this zone"}, 400
+            return {"error": "Not information about this zone"}, 400
 
 
 api_v1.add_resource(GetGeo, "/api/geo/<string:host>")
 api_v1.add_resource(WhoisInfo, "/api/whois/<string:host>")
-
-
-
