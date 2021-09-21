@@ -7,6 +7,7 @@ import {Url} from '../config/Config.js'
 import Loading from '../components/Loading';
 import IpWhois from '../components/IpWhoIs';
 import DomainWhois from '../components/DomainWhois'
+import Ping from '../components/Ping';
 
 
 
@@ -29,6 +30,7 @@ const Tools =()=>{
     const [inputError, setInputError] = useState('')
     const [WhoisIPdata, setWhoisIPdata] = useState([])
     const [WhoisDomainData, setWhoisDomainData] = useState([])
+    const [pingData, setPingData] = useState([])
 
     async function  getApiRes(host){
        setLoading(true)
@@ -84,6 +86,26 @@ const Tools =()=>{
         }
       }
  
+    const handleSubmitPing = (evt, host) => {
+        evt.preventDefault();
+        const re = /^(?:(?:(?:[a-zA-z\-]+)\:\/{1,3})?(?:[a-zA-Z0-9])(?:[a-zA-Z0-9\-\.]){1,61}(?:\.[a-zA-Z]{2,})+|\[(?:(?:(?:[a-fA-F0-9]){1,4})(?::(?:[a-fA-F0-9]){1,4}){7}|::1|::)\]|(?:(?:[0-9]{1,3})(?:\.[0-9]{1,3}){3}))(?:\:[0-9]{1,5})?$/
+        if (!re.test(String(host).toLowerCase())){
+          setIsValid(true) || setInputError("Please type correct IP-address or domain")
+          setTimeout(() => {setInputError("")}, 5000)
+          if(host.length < 4){
+            setIsValid(true) || setInputError("Please type correct IP-address or domain")
+            setTimeout(() => {setInputError("")}, 5000)
+          }
+        }
+         
+        else{
+          setPingData(<Ping host={host}/>)
+          setStatus(false)
+          setDomWhois(false)
+          setIpWhois(false)
+
+          }
+    }  
    
     return(
         <body>
@@ -96,7 +118,7 @@ const Tools =()=>{
                   <input className="input" onChange={e => setHost(e.target.value)}   value={host} type="text" name="field" placeholder="Enter IP or domain"/>
                   <div>
                      <button type="submit" onClick={(evt) => handleSubmit(evt,host)} >Info</button>
-                     <button className="button_ping" type="submit">Ping</button>
+                     <button className="button_ping" type="submit" onClick={(evt) => handleSubmitPing(evt,host)}>Ping</button>
                      <button className="button_whois" type="submit" onClick={(evt) => handleSubmitInfo(evt,host)}>Whois</button>
                   </div>
                   
@@ -149,7 +171,7 @@ const Tools =()=>{
                <div className="map">
                 <MapBasic latitude={geo.latitude} longitude={geo.longitude}/>
                </div>    
-            </div> : domWhois ? WhoisDomainData  : !domWhois && ipWhois ? WhoisIPdata: null }
+            </div> : domWhois ? WhoisDomainData  : !domWhois && ipWhois ? WhoisIPdata: pingData }
         </body>
     )
 }

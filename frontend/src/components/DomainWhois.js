@@ -27,7 +27,7 @@ const DomainWhois = (props) => {
 
    });
   }
-  console.log(JSON.stringify(whois,null,2))
+  
   useEffect(() => {
       getApiRes(props.host)
       },[props.host]);
