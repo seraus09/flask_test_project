@@ -59,15 +59,13 @@ class WhoisInfo(Resource):
                     whois_data = dict()
                     time_data = dict()
                     for key_, value_ in whois.query(host).__dict__.items():
-                        key_list = ["creation_date","expiration_date","last_updated","name_servers"]
+                        key_list = ["creation_date", "expiration_date", "last_updated", "name_servers"]
                         if key_ in key_list:
                             time_data[key_] = str(value_)
                         else:
                             whois_data[key_] = value_
                     return {"main_data": whois_data, "data": time_data}, 200
-
-            else:
-                return {"error": "Not information about this zone"}, 400
+            return {"error": "Not information about this zone"}, 400
         except Exception as error:
             logger.error(error)
             return {"error": "Not information about this zone"}, 400
