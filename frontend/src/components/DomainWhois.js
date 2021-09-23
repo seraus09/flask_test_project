@@ -30,7 +30,7 @@ const DomainWhois = (props) => {
   
   useEffect(() => {
       getApiRes(props.host)
-      },[props.host]);
+      },[props.evt]);
  
       return(
         

@@ -1,0 +1,11 @@
+$my-brand-color: #34db34;
+$primary-color: $my-brand-color;
+@import 'loaders.css/src/animations/pacman.scss';
+@import 'loaders.css/src/animations/ball-pulse-sync.scss';
+
+.loader-hidden {
+  display: none;
+}
+.loader-active {
+  display: block;
+}

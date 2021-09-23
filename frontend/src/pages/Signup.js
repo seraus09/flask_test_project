@@ -1,9 +1,9 @@
-import '../App';
+
 
 
 const Signup =()=>{
     return(
-        <h1>Signup</h1>
+        <h1>Hello</h1>
     )
 }
 

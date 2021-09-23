@@ -69,12 +69,12 @@ const Tools =()=>{
         const re_domain = /\b((?=[a-z0-9-]{1,63}\.)(xn--)?[a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,63}\b/
 
         if (re_ip.test(String(host).toLowerCase())){
-          setWhoisIPdata(<IpWhois host={host}/>)
+          setWhoisIPdata(<IpWhois host={host} evt={evt}/>)
           setIpWhois(true)
           setStatus(false)
           setDomWhois(false)
           } else if (re_domain.test(String(host).toLowerCase())){
-              setWhoisDomainData(<DomainWhois host={host}/>)
+              setWhoisDomainData(<DomainWhois host={host} evt={evt}/>)
               setDomWhois(true)
               setStatus(false)
               setIpWhois(false)
@@ -99,7 +99,7 @@ const Tools =()=>{
         }
          
         else{
-          setPingData(<Ping host={host}/>)
+          setPingData(<Ping host={host} evt={evt}/>)
           setStatus(false)
           setDomWhois(false)
           setIpWhois(false)

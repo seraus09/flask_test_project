@@ -29,7 +29,7 @@ const IpWhois = (props) => {
     }
     useEffect(() => {
         getApiRes(props.host)
-        },[props.host]);
+        },[props.evt]);
       
     
 
