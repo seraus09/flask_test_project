@@ -18,7 +18,7 @@ const IpWhois = (props) => {
     
     async function  getApiRes(host){
       setLoading(true)
-      await instance.get(`/api/whois/${props.host}`).then((resp) => {
+      await instance.post(`/api/whois/`,{"host": host}).then((resp) => {
          const allInfo = resp.data;
          setWhois(allInfo);
        }).then(()=> setLoading(false))

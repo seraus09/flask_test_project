@@ -34,7 +34,7 @@ const Tools =()=>{
 
     async function  getApiRes(host){
        setLoading(true)
-       await instance.get(`/api/geo/${host}`).then((resp) => {
+       await instance.post(`/api/geo/`, {"host": host}).then((resp) => {
           const allInfo = resp.data;
           setGeo(allInfo);
         }).then(()=> setLoading(false))

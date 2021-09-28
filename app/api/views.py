@@ -1,6 +1,6 @@
 import socket
-from flask import Blueprint
-from flask_restful import Resource, Api
+from flask import Blueprint, request
+from flask_restful import Resource, Api, reqparse
 import requests
 from loguru import logger
 from ipwhois import IPWhois
@@ -12,6 +12,7 @@ import re
 
 api_bp = Blueprint("api_v1", __name__)
 api_v1 = Api(api_bp)
+parser = reqparse.RequestParser()
 
 
 class CleanHost():
@@ -31,8 +32,9 @@ class CleanHost():
 
 
 class GetGeo(Resource):
-    def get(self, host):
+    def post(self):
         API_KEY = current_app.config["API_KEY"]
+        host = request.get_json()['host']   
         ip = CleanHost(host).get_clean_hostname()
         try:
             url = requests.get(f"http://api.ipstack.com/{ip}?access_key={API_KEY}")
@@ -44,7 +46,8 @@ class GetGeo(Resource):
 
 
 class WhoisInfo(Resource):
-    def get(self, host):
+    def post(self):
+        host = request.get_json()['host']
         hostname = urlparse(host).hostname
         try:
             if re.match("http:|https:", host):
@@ -71,5 +74,5 @@ class WhoisInfo(Resource):
             return {"error": "Not information about this zone"}, 400
 
 
-api_v1.add_resource(GetGeo, "/api/geo/<string:host>")
-api_v1.add_resource(WhoisInfo, "/api/whois/<string:host>")
+api_v1.add_resource(GetGeo, "/api/geo/")
+api_v1.add_resource(WhoisInfo, "/api/whois/")

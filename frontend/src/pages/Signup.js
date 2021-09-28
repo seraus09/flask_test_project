@@ -1,9 +1,11 @@
-
-
+import Menu from '../components/Menu.js';
+import "../App.css"
 
 const Signup =()=>{
     return(
-        <h1>Hello</h1>
+    <header className="tools_header">
+        <Menu/>
+    </header>
     )
 }
 

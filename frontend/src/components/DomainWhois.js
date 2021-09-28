@@ -16,9 +16,9 @@ const DomainWhois = (props) => {
   const [whois,setWhois] = useState([])
   const [loading,setLoading] = useState(false)
   
-  async function  getApiRes(){
+  async function  getApiRes(host){
     setLoading(true)
-    await instance.get(`/api/whois/${props.host}`).then((resp) => {
+    await instance.post(`/api/whois/`, {"host": host}).then((resp) => {
        const allInfo = resp.data;
        setWhois(allInfo);
      }).then(()=> setLoading(false))
