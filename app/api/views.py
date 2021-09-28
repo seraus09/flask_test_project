@@ -34,7 +34,7 @@ class CleanHost():
 class GetGeo(Resource):
     def post(self):
         API_KEY = current_app.config["API_KEY"]
-        host = request.get_json()['host']   
+        host = request.get_json()['host']
         ip = CleanHost(host).get_clean_hostname()
         try:
             url = requests.get(f"http://api.ipstack.com/{ip}?access_key={API_KEY}")
