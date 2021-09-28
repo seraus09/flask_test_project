@@ -49,20 +49,25 @@ class WhoisInfo(Resource):
     def post(self):
         host = request.get_json()['host']
         hostname = urlparse(host).hostname
+        whois_data = dict()
+        time_data = dict()
+        key_list = ["creation_date", "expiration_date", "last_updated", "name_servers"]
         try:
             if re.match("http:|https:", host):
                 if re.match(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b", str(hostname)):
                     return IPWhois(hostname).lookup_whois()['nets'][0], 200
                 else:
-                    return whois.query(hostname).__dict__, 200
+                    for key_, value_ in whois.query(hostname).__dict__.items():
+                        if key_ in key_list:
+                            time_data[key_] = str(value_)
+                        else:
+                            whois_data[key_] = value_
+                    return {"main_data": whois_data, "data": time_data}, 200
             elif hostname is None:
                 if re.match(r"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b", str(host)):
                     return IPWhois(host).lookup_whois()['nets'][0], 200
                 else:
-                    whois_data = dict()
-                    time_data = dict()
                     for key_, value_ in whois.query(host).__dict__.items():
-                        key_list = ["creation_date", "expiration_date", "last_updated", "name_servers"]
                         if key_ in key_list:
                             time_data[key_] = str(value_)
                         else:
