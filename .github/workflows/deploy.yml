@@ -36,12 +36,12 @@ jobs:
         VALIDATE_PYTHON: true
         VALIDATE_PYTHON_FLAKE8: true
     
-    - uses: yanzay/notify-telegram@v0.1.0
-      if: always()
-      with:
-        chat: ${{ secrets.CHAT }}
-        token: ${{ secrets.TOCKEN }}
-        status: ${{ job.status }} 
+    #- uses: yanzay/notify-telegram@v0.1.0
+    #  if: always()
+    #  with:
+    #    chat: ${{ secrets.CHAT }}
+    #    token: ${{ secrets.TOCKEN }}
+    #    status: ${{ job.status }} 
   build:
     name: Build and test 
     needs: [linter]
