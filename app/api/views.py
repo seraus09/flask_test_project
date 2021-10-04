@@ -10,7 +10,6 @@ from flask import current_app
 import re
 
 
-
 api_bp = Blueprint("api_v1", __name__)
 api_v1 = Api(api_bp)
 
@@ -18,10 +17,10 @@ parser = reqparse.RequestParser()
 parser.add_argument('host', dest='host')
 
 
-
 class CleanHost():
     def __init__(self, host):
         self.host = host
+
 
     def get_clean_hostname(self):
         url = self.host
