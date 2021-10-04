@@ -10,9 +10,13 @@ from flask import current_app
 import re
 
 
+
 api_bp = Blueprint("api_v1", __name__)
 api_v1 = Api(api_bp)
+
 parser = reqparse.RequestParser()
+parser.add_argument('host', dest='host')
+
 
 
 class CleanHost():
@@ -76,7 +80,7 @@ class WhoisInfo(Resource):
             return {"error": "Not information about this zone"}, 400
         except Exception as error:
             logger.error(error)
-            return {"error": "Not information about this zone"}, 400
+        return {"error": "Not information about this zone "}, 400
 
 
 api_v1.add_resource(GetGeo, "/api/geo/")

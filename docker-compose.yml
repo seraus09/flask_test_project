@@ -3,11 +3,12 @@ services:
   backend:
     build: .
     ports:
-      - "80:80"
+      - "80:5000"
     volumes:
-      - ./:/var/www/backend
+      - ./:/var/www/site
     depends_on:
       - redis 
+    command: python3 /var/www/site/app/wsgi.py
 
   redis:
     image: "redis:alpine"

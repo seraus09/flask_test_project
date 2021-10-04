@@ -3,11 +3,12 @@ services:
   backend:
     image: docker.io/seraua09/test
     ports:
-      - "80:80"
+      - "80:5000"
     volumes:
       - ./:/var/www/backend
     depends_on:
       - redis 
+    command: gunicorn --bind 0.0.0.0:5000 wsgi:app
 
   redis:
     image: "redis:alpine"
