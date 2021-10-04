@@ -21,7 +21,6 @@ class CleanHost():
     def __init__(self, host):
         self.host = host
 
-
     def get_clean_hostname(self):
         url = self.host
         if re.match("http:|https:|ftp:", str(url)):
